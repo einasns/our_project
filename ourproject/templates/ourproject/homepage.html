@@ -3,12 +3,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home page</title>
-    <link rel="stylesheet" href="{% static '/css/home.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Tangerine">
 </head>
 <body>
 
-
-
+<h2>home page for customer </h2>
+<span> hello,{{ request.user }}</span>
+<span><a href="{% url 'logout' %}">logout</a></span>
 </body>
 </html>
