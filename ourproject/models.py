@@ -2,26 +2,50 @@ from django.db import models
 
 # Create your models here.
 class Customer(models.Model):
-	name = models.CharField(max_length=200, null=True)
+	full_name = models.CharField(max_length=200, null=True)
+	user_name=models.CharField(max_length=200,null=True)
 	phone = models.CharField(max_length=200, null=True)
 	email = models.CharField(max_length=200, null=True)
+	address=models.CharField(max_length=200,null=True)
+	customer_id = models.CharField(max_length=9,null=True)
 	date_created = models.DateTimeField(auto_now_add=True, null=True)
-
+	password=models.CharField(max_length=15,null=True)
 	def __str__(self):
 		return self.name
+class Worker(models.Model):
+	full_name = models.CharField(max_length=200, null=True)
+	user_name=models.CharField(max_length=200,null=True)
+	phone = models.CharField(max_length=200, null=True)
+	email = models.CharField(max_length=200, null=True)
+	address=models.CharField(max_length=200,null=True)
+	worker_id = models.CharField(max_length=9,null=True)
+	password=models.CharField(max_length=15,null=True)
+	bank_acccount=models.CharField(max_length=16,null=True)
+
+	date_created = models.DateTimeField(auto_now_add=True, null=True)
+	def __str__(self):
+		return self.name
+class Admin(models.Model):
+	user_name=models.CharField(max_length=200,null=True)
+	pass_word=models.CharField(max_length=200,null=True)
+
 class Tag(models.Model):
 	name = models.CharField(max_length=200, null=True)
-
 	def __str__(self):
 		return self.name
 class Product(models.Model):
 	CATEGORY = (
-			('Indoor', 'Indoor'),
-			('Out Door', 'Out Door'),
+			('Pen-Markers', 'Pen-Markers'),
+			('Paint', 'Paint'),('Brushes', 'Brushes'),
+			('Art paper&board', 'Art paper&board'),
+			('Canvas', 'Canvas'),
+			('Drawing media', 'Drawing media')
 			)
 
 	name = models.CharField(max_length=200, null=True)
-	price = models.FloatField(null=True)
+	bar_code=models.CharField(max_length=10,null=True)
+	price = models.IntegerField(default=0)
+	amount=models.IntegerField(default=0)
 	category = models.CharField(max_length=200, null=True, choices=CATEGORY)
 	description = models.CharField(max_length=200, null=True,blank=True)
 	date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -31,15 +55,12 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-	STATUS = (
-			('Pending', 'Pending'),
-			('Out for delivery', 'Out for delivery'),
-			('Delivered', 'Delivered'),
-			)
-
+	order_number=models.IntegerField(default=0)
+	price=models.IntegerField(default=0)
+	amount=models.IntegerField(default=0)
+	name_of_product=models.CharField(max_length=200)
+	customer_name=models.CharField(max_length=200,null=True)
 	customer =models.ForeignKey(Customer,null=True,on_delete=models.SET_NULL)
 	product = models.ForeignKey(Product,null=True,on_delete=models.SET_NULL)
-
 	date_created = models.DateTimeField(auto_now_add=True, null=True)
-	status = models.CharField(max_length=200, null=True, choices=STATUS)
 
