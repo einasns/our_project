@@ -57,7 +57,9 @@ def homepage(request):
 
 
 def products(request):
+
 	products=Product.objects.all()
+
 	return render(request, 'ourproject/product.html',{'products':products})
 
 def customer(request):
