@@ -46,8 +46,23 @@ def logoutcustomer(request):
 	logout(request)
 	return redirect('login')
 def loginAdmin(request):
+	if request.user.is_authenticated:
+		return redirect('homepage')
+	else:
+		if request.method == 'POST':
+			username = request.POST.get('username')
+			password = request.POST.get('password')
+			user = authenticate(request, username=username, password=password)
+			if user is not None:
+				login(request, user)
+				return redirect('homepage')
+			else:
+				messages.info(request, 'username OR password incorrert')
+		context = {}
+		return render(request, 'ourproject/log_in_admin.html', context)
+def loginWorker(request):
 	context={}
-	return render(request, 'ourproject/log_in_admin.html')
+	return render(request, 'ourproject/log_in_worker.html')
 def home(request):
 	return render(request, 'ourproject/dashboard.html')
 
