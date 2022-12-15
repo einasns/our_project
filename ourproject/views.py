@@ -24,7 +24,7 @@ def singup(request):
 			return redirect('login')
 	context = {'form':form}
 	return render(request, 'ourproject/singup.html', context)
-@unauthenticated_user
+
 def logincustomer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
 	if request.method=='POST':
@@ -44,21 +44,23 @@ def logincustomer(request):
 def logoutcustomer(request):
 	logout(request)
 	return redirect('login')
+@unauthenticated_user
 def loginAdmin(request):
-	if request.user.is_authenticated:
-		return redirect('homepage')
-	else:
-		if request.method == 'POST':
-			username = request.POST.get('username')
-			password = request.POST.get('password')
-			user = authenticate(request, username=username, password=password)
-			if user is not None:
+	users_in_group = Group.objects.get(name='Admin').user_set.all()
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			if user in users_in_group:
 				login(request, user)
-				return redirect('homepage')
+				return redirect('customers')
 			else:
 				messages.info(request, 'username OR password incorrert')
-		context = {}
-		return render(request, 'ourproject/log_in_admin.html', context)
+		else:
+			messages.info(request, 'username OR password incorrert')
+	context = {}
+	return render(request, 'ourproject/log_in_admin.html', context)
 def loginWorker(request):
 	context={}
 	return render(request, 'ourproject/log_in_worker.html')
