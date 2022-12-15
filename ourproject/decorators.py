@@ -44,6 +44,8 @@ def admin_only(view_func):
             return redirect('homepage')
         if group=='Admin':
             return view_func(request, *args, **kwargs)
+        if group=='Customer':
+            return redirect('homepage')
         else:
             return redirect('home')
         #we need to add the worker in this function
@@ -58,6 +60,24 @@ def only_customer(view_func):
             return redirect('homepage_admin')
         if group=='Customer':
             return view_func(request, *args, **kwargs)
+        if group == 'Worker':
+            return redirect('homepage_worker')
+        else:
+            return redirect('home')
+        #we need to add the worker in this function
+    return wrapper_func
+def only_worker(view_func):
+    def wrapper_func(request,*args,**kwargs):
+        group=None
+        if request.user.groups.exists():
+            group=request.user.groups.all()[0].name
+        if group == 'Admin':
+            return redirect('homepage_admin')
+        if group=='Worker':
+            return view_func(request, *args, **kwargs)
+        if group=='Customer':
+            return redirect('homepage')
+
         else:
             return redirect('home')
         #we need to add the worker in this function
