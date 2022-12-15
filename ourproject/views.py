@@ -49,9 +49,9 @@ def logoutcustomer(request):
 def loginAdmin(request):
 	users_in_groub = Group.objects.get(name='Admin').user_set.all()
 	if request.method == 'POST':
-		Username = request.POST.get('username')
-		Password = request.POST.get('password')
-		user = authenticate(request, username=Username, password=Password)
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(request, username=username, password=password)
 		if user is not None:
 			if user in users_in_groub:
 				login(request, user)
@@ -68,13 +68,13 @@ def loginWorker(request):
 def home(request):
 	return render(request, 'ourproject/dashboard.html')
 
-@login_required(login_url='login')
-@admin_only
+@login_required(login_url='loginAdmin')
+@only_customer
 def homepage(request):
 	return render(request, 'ourproject/homepage.html')
 
 @login_required(login_url='login')
-@only_customer
+@admin_only
 def homepage_admin(request):
 	return render(request, 'ourproject/homepage.html')
 
