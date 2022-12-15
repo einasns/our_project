@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from .forms import CreatUserForm
-from .decorators import unauthenticated_user,allwed_users,admin_only,unauthenticated_user_login
+from .decorators import unauthenticated_user,allwed_users,admin_only,unauthenticated_user_login,only_customer
 # Create your views here.
 @unauthenticated_user
 def singup(request):
@@ -44,21 +44,22 @@ def logincustomer(request):
 def logoutcustomer(request):
 	logout(request)
 	return redirect('login')
+# this functions do the work of the log in
 @unauthenticated_user
 def loginAdmin(request):
-	users_in_group = Group.objects.get(name='Admin').user_set.all()
+	users_in_groub = Group.objects.get(name='Admin').user_set.all()
 	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(request, username=username, password=password)
+		Username = request.POST.get('username')
+		Password = request.POST.get('password')
+		user = authenticate(request, username=Username, password=Password)
 		if user is not None:
-			if user in users_in_group:
+			if user in users_in_groub:
 				login(request, user)
-				return redirect('customers')
+				return redirect('homepage_admin')
 			else:
-				messages.info(request, 'username OR password incorrert')
+				messages.info(request, 'Username OR Password incorrert')
 		else:
-			messages.info(request, 'username OR password incorrert')
+			messages.info(request, 'username OR Password incorrert')
 	context = {}
 	return render(request, 'ourproject/log_in_admin.html', context)
 def loginWorker(request):
@@ -72,6 +73,10 @@ def home(request):
 def homepage(request):
 	return render(request, 'ourproject/homepage.html')
 
+@login_required(login_url='login')
+@only_customer
+def homepage_admin(request):
+	return render(request, 'ourproject/homepage.html')
 
 def products(request):
 

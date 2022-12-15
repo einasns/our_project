@@ -11,6 +11,8 @@ urlpatterns = [
 
     path('loginAdmin/', views.loginAdmin,name='loginAdmin'),
     path('homepage/',views.homepage,name='homepage'),
+    path('homepageadmin/', views.homepage_admin, name='homepage_admin'),
+
     path('singup/', views.singup,name="sigup"),
 
 ]
