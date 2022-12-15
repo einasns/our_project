@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from .forms import CreatUserForm
-from .decorators import unauthenticated_user,allwed_users,admin_only,unauthenticated_user_login
+from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
 def singup(request):
@@ -24,7 +24,7 @@ def singup(request):
 			return redirect('login')
 	context = {'form':form}
 	return render(request, 'ourproject/singup.html', context)
-@unauthenticated_user
+
 def logincustomer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
 	if request.method=='POST':
@@ -44,32 +44,56 @@ def logincustomer(request):
 def logoutcustomer(request):
 	logout(request)
 	return redirect('login')
+# this functions do the work of the log in
+@unauthenticated_user
 def loginAdmin(request):
-	if request.user.is_authenticated:
-		return redirect('homepage')
-	else:
-		if request.method == 'POST':
-			username = request.POST.get('username')
-			password = request.POST.get('password')
-			user = authenticate(request, username=username, password=password)
-			if user is not None:
+	users_in_groub = Group.objects.get(name='Admin').user_set.all()
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			if user in users_in_groub:
 				login(request, user)
-				return redirect('homepage')
+				return redirect('homepage_admin')
 			else:
-				messages.info(request, 'username OR password incorrert')
-		context = {}
-		return render(request, 'ourproject/log_in_admin.html', context)
+				messages.info(request, 'Username OR Password incorrert')
+		else:
+			messages.info(request, 'username OR Password incorrert')
+	context = {}
+	return render(request, 'ourproject/log_in_admin.html', context)
 def loginWorker(request):
-	context={}
-	return render(request, 'ourproject/log_in_worker.html')
+	users_in_groub = Group.objects.get(name='Worker').user_set.all()
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		user = authenticate(request, username=username, password=password)
+		if user is not None:
+			if user in users_in_groub:
+				login(request, user)
+				return redirect('homepage_worker')
+			else:
+				messages.info(request, 'Username OR Password incorrert')
+		else:
+			messages.info(request, 'username OR Password incorrert')
+	context = {}
+	return render(request, 'ourproject/log_in_worker.html', context)
 def home(request):
 	return render(request, 'ourproject/dashboard.html')
 
-@login_required(login_url='login')
-@admin_only
+@login_required(login_url='loginAdmin')
+@only_customer
 def homepage(request):
 	return render(request, 'ourproject/homepage.html')
 
+@login_required(login_url='login')
+@admin_only
+def homepage_admin(request):
+	return render(request, 'ourproject/homepage_admin.html')
+@login_required(login_url='login')
+@only_worker
+def homepage_worker(request):
+	return render(request, 'ourproject/homepage_worker.html')
 
 def products(request):
 

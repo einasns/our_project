@@ -1,29 +1,21 @@
+
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'homepage' %}">Design</a>
+  <a class="navbar-brand" href="{% url 'homepage_admin' %}">Design</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">hiiiiii<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#"></a>
-      <a class="nav-item nav-link" href="#"></a>
-        <a class="nav-item nav-link" href="#"></a>
-        <span class="nav-item nav-link" > </span>
-        <a class="nav-item nav-link"  href="{% url 'logout' %}">logout</a>
+      <a class="nav-item nav-link active" href="#">Review customers list<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Review products list</a>
+      <a class="nav-item nav-link" href="#">Review workers list</a>
+      <a class="nav-item nav-link" href="#">Add product</a>
+        <a class="nav-item nav-link" href="#">Delete product</a>
+      <a class="nav-item nav-link" href="#">Add worker</a>
+      <a class="nav-item nav-link" href="#">Delete worker</a>
+      <a class="nav-item nav-link" href="#">Work schedule</a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>
     </div>
   </div>
 </nav>
-<div class="row">
-   <div class="col-md">
-      <div class="card card-body">
-         <table class="table table-sm">
-            <tr>
-
-            </tr>
-
-         </table>
-      </div>
-   </div>
-</div>
