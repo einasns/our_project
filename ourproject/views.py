@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from .forms import CreatUserForm
-from .decorators import unauthenticated_user,allwed_users,admin_only,unauthenticated_user_login,only_customer
+from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
 def singup(request):
@@ -91,7 +91,7 @@ def homepage(request):
 def homepage_admin(request):
 	return render(request, 'ourproject/homepage_admin.html')
 @login_required(login_url='login')
-@admin_only
+@only_worker
 def homepage_worker(request):
 	return render(request, 'ourproject/homepage_worker.html')
 
