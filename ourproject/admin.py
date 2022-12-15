@@ -8,5 +8,6 @@ admin.site.register(Product)
 admin.site.register(Tag)
 admin.site.register(Order)
 admin.site.register(cart)
+admin.site.register(Feedback)
 
 

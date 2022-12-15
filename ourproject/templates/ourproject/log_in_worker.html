@@ -19,10 +19,18 @@
     <br>
 <div class="logo"></div>
 <div class="login-block">
-    <h1>Log in worker</h1>
-    <input type="text" value="" placeholder="Username" id="username" />
-    <input type="password" value="" placeholder="Password" id="password" />
+    <h1>worker Log in</h1>
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="text" value="" placeholder="Username" name="username" id="username" />
+    <input type="password" value="" placeholder="Password" name="password" id="password" />
     <button>log in</button>
+</form>
+    {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+
+    {% endfor %}
+
 </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
