@@ -28,15 +28,15 @@ def singup(request):
 def logincustomer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
 	if request.method=='POST':
-		username=request.POST.get('username')
-		password=request.POST.get('password')
+		username=request.POST.get('Username')
+		password=request.POST.get('Password')
 		user=authenticate(request,username=username,password=password)
 		if user is not None:
 			if user in users_in_group:
 				login(request,user)
 				return redirect('homepage')
 			else:
-				messages.info(request, 'username OR password incorrert')
+				messages.info(request, 'Username OR Password incorrert')
 		else:
 			messages.info(request,'username OR password incorrert')
 	context={}
@@ -44,6 +44,12 @@ def logincustomer(request):
 def logoutcustomer(request):
 	logout(request)
 	return redirect('login')
+def logoutadmin(request):
+	logout(request)
+	return redirect('loginAdmin')
+def logoutworker(request):
+	logout(request)
+	return redirect('logoutworker')
 @unauthenticated_user
 def loginAdmin(request):
 	users_in_group = Group.objects.get(name='Admin').user_set.all()
