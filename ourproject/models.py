@@ -74,6 +74,8 @@ class Feedback(models.Model):
 class cart(models.Model):
 	customer=models.OneToOneField(Customer,null=True,on_delete=models.CASCADE)
 	product = models.ForeignKey(Product,null=True,on_delete=models.SET_NULL)
+# class work_schedule(models.Model):
+
 
 
 
