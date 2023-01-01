@@ -7,15 +7,20 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Review customers list<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Review products list</a>
-      <a class="nav-item nav-link" href="#">Review workers list</a>
-      <a class="nav-item nav-link" href="#">Add product</a>
-        <a class="nav-item nav-link" href="#">Delete product</a>
-      <a class="nav-item nav-link" href="#">Add worker</a>
-      <a class="nav-item nav-link" href="#">Delete worker</a>
+      <a class="nav-item nav-link active" href="#">Customers list<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="#">Products list</a>
+      <a class="nav-item nav-link" href="#">Workers list</a>
+      <a class="nav-item nav-link" href="#">Order list</a>
+{#      <a class="nav-item nav-link" href="#">Delete product</a>#}
+{#      <a class="nav-item nav-link" href="#">Add worker</a>#}
+{#      <a class="nav-item nav-link" href="#">Delete worker</a>#}
       <a class="nav-item nav-link" href="#">Work schedule</a>
-        <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>
+        <div style="margin-left: 580px">
+            <li class="nav-item">
+        <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+       </li>
+        </div>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">log out</a>
     </div>
   </div>
 </nav>
