@@ -102,5 +102,14 @@ def products(request):
 	return render(request, 'ourproject/product.html',{'products':products})
 
 def customer(request):
-	return render(request, 'ourproject/customer.html')
+	customer =Customer.objects.all()
+	cus = {'customer': customer}
+	return render(request, 'ourproject/customer_list.html',cus)
+
+
+def workers(request):
+	workers=Worker.objects.all()
+	wor={'workers':Worker}
+	return render(request,'ourproject/workers.html',wor)
+
 
