@@ -7,6 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
+
 </head>
 <body ></body>
 	{%  include 'ourproject/navbars.html' %}
@@ -25,6 +27,9 @@
                 <th>Amount</th>
                 <th>Price</th>
                <th>Category</th>
+                <th>update product</th>
+               <th>Delete product</th>
+
             </tr>
             {% for i in products %}
                           <tr>
@@ -33,12 +38,19 @@
                               <td>{{ i.amount }}</td>
                               <td>{{ i.price }}</td>
                               <td>{{ i.category }}</td>
+                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">Update product</a></td>
+                             <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">Delete product</a></td>
+
                           </tr>
                       {% endfor %}
          </table>
-      </div>
-   </div>
 
+   </div>
+</div>
+           <div style="margin-left: 580px">
+
+       <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="#">Add product</a></td>
+        <div/>
 </div>
 
 
