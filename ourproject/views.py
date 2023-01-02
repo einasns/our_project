@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
-from .forms import CreatUserForm
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -95,11 +95,11 @@ def homepage_admin(request):
 def homepage_worker(request):
 	return render(request, 'ourproject/homepage_worker.html')
 
-def products(request):
+def products_worker(request):
 
 	products=Product.objects.all()
 
-	return render(request, 'ourproject/product.html',{'products':products})
+	return render(request, 'ourproject/product_for_worker.html', {'products':products})
 
 def customer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
@@ -113,4 +113,29 @@ def workers(request):
 	wor={'workers':Worker}
 	return render(request,'ourproject/workers.html',wor)
 
-
+def add_product_worker(request):
+	form=ProductForm()
+	if request.method=='POST':
+		bar_code = request.POST.get('bar_code')
+		instance = Product.objects.filter(bar_code=bar_code)
+		if not instance:
+			form = ProductForm(request.POST)
+			if form.is_valid():
+				form.save()
+				return redirect('poducts_worker')
+			else:
+				messages.info(request, 'the info is not valid')
+		else:
+			messages.info(request, 'this product already exsited')
+	context = {'form':form}
+	return render(request, 'ourproject/add_product_worker.html',context)
+def update_product_worker(request,pk):
+	product=Product.objects.get(bar_code=pk)
+	form=ProductFormUPdate(instance=product)
+	if request.method=='POST':
+		form = ProductFormUPdate(request.POST,instance=product)
+		if form.is_valid():
+			form.save()
+			return redirect('poducts_worker')
+	context = {'form':form}
+	return render(request, 'ourproject/update_product_worker.html',context)
