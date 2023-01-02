@@ -20,13 +20,12 @@
       <div class="card card-body">
          <table class="table">
             <tr>
-               <th>full_name</th>
-                <th>user_name</th>
-                <th> phone </th>
-                <th>email</th>
-                <th>address</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th> email </th>
+                <th>username</th>
             </tr>
-            {% for i in Users %}
+            {% for i in users_in_group %}
                           <tr>
                               <td>{{i.first_name}}</td>
                               <td>{{ i.last_name }}</td>

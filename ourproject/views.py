@@ -102,8 +102,9 @@ def products(request):
 	return render(request, 'ourproject/product.html',{'products':products})
 
 def customer(request):
-	customer =Customer.objects.all()
-	cus = {'customer': customer}
+	users_in_group = Group.objects.get(name='Customer').user_set.all()
+	# customer =Customer.objects.all()
+	cus = {'users_in_group': users_in_group}
 	return render(request, 'ourproject/customer_list.html',cus)
 
 
