@@ -102,5 +102,15 @@ def products(request):
 	return render(request, 'ourproject/product.html',{'products':products})
 
 def customer(request):
-	return render(request, 'ourproject/customer.html')
+	users_in_group = Group.objects.get(name='Customer').user_set.all()
+	# customer =Customer.objects.all()
+	cus = {'users_in_group': users_in_group}
+	return render(request, 'ourproject/customer_list.html',cus)
+
+
+def workers(request):
+	workers=Worker.objects.all()
+	wor={'workers':Worker}
+	return render(request,'ourproject/workers.html',wor)
+
 
