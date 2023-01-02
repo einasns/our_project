@@ -26,12 +26,12 @@ def singup(request):
 	return render(request, 'ourproject/singup.html', context)
 
 def logincustomer(request):
-	users_in_group = Group.objects.get(name='Customer').user_set.all()
 	if request.method=='POST':
 		username=request.POST.get('username')
 		password=request.POST.get('password')
 		user=authenticate(request,username=username,password=password)
 		if user is not None:
+			users_in_group = Group.objects.get(name='Customer').user_set.all()
 			if user in users_in_group:
 				login(request,user)
 				return redirect('homepage')
@@ -47,12 +47,12 @@ def logoutcustomer(request):
 # this functions do the work of the log in
 @unauthenticated_user
 def loginAdmin(request):
-	users_in_groub = Group.objects.get(name='Admin').user_set.all()
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
+			users_in_groub = Group.objects.get(name='Admin').user_set.all()
 			if user in users_in_groub:
 				login(request, user)
 				return redirect('homepage_admin')
@@ -63,12 +63,12 @@ def loginAdmin(request):
 	context = {}
 	return render(request, 'ourproject/log_in_admin.html', context)
 def loginWorker(request):
-	users_in_groub = Group.objects.get(name='Worker').user_set.all()
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
+			users_in_groub = Group.objects.get(name='Worker').user_set.all()
 			if user in users_in_groub:
 				login(request, user)
 				return redirect('homepage_worker')
@@ -102,5 +102,15 @@ def products(request):
 	return render(request, 'ourproject/product.html',{'products':products})
 
 def customer(request):
-	return render(request, 'ourproject/customer.html')
+	users_in_group = Group.objects.get(name='Customer').user_set.all()
+	# customer =Customer.objects.all()
+	cus = {'users_in_group': users_in_group}
+	return render(request, 'ourproject/customer_list.html',cus)
+
+
+def workers(request):
+	workers=Worker.objects.all()
+	wor={'workers':Worker}
+	return render(request,'ourproject/workers.html',wor)
+
 
