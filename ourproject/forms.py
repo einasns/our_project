@@ -20,3 +20,7 @@ class CreatUserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name','last_name','email','username','password1','password2']
+class shiftsForm(ModelForm):
+    class Meta:
+        model=WeekDayShift
+        fields=['worker_name','shift','day']
