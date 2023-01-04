@@ -101,6 +101,12 @@ def products(request):
 
 	return render(request, 'ourproject/product.html',{'products':products})
 
+def Admin_Reviewproduct_list(request):
+
+	products=Product.objects.all()
+
+	return render(request, 'ourproject/Admin_Reviewproduct_list.html',{'products':products})
+
 def customer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
 	# customer =Customer.objects.all()
@@ -112,5 +118,20 @@ def workers(request):
 	workers=Worker.objects.all()
 	wor={'workers':Worker}
 	return render(request,'ourproject/workers.html',wor)
+def view_customer(request):
+	users_in_group = Group.objects.get(name='Customer').user_set.all()
+	# customer =Customer.objects.all()
+	cus = {'users_in_group': users_in_group}
+	return render(request, 'ourproject/customer_list.html', cus)
+
+def deleteworker(request,pk):
+	context={}
+	return render(request,'accounts/delete.html',context)
+
+def view_order(request):
+	order =Order.objects.all()
+	# customer =Customer.objects.all()
+	ord = {'order': order}
+	return render(request, 'ourproject/order_list.html', ord)
 
 
