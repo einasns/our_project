@@ -11,6 +11,7 @@
 
 </head>
 <body ></body>
+	{%  include 'ourproject/navbar_worker.html' %}
 <br>
 
 <div class="row">
@@ -37,7 +38,8 @@
                               <td>{{ i.amount }}</td>
                               <td>{{ i.price }}</td>
                               <td>{{ i.category }}</td>
-                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">Update product</a></td>
+                              <td>{{ i.description }}</td>
+                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'update_product_worker' i.bar_code %}">Update product</a></td>
                              <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">Delete product</a></td>
 
                           </tr>
@@ -48,10 +50,10 @@
 </div>
            <div style="margin-left: 580px">
 
-       <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="#">Add product</a></td>
+       <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="{% url 'add_product_worker' %}">Add product</a></td>
         <div/>
 </div>
-
+</div>
 
 
 </body>
