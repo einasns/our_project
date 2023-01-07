@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from itertools import count, repeat,chain
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -211,3 +211,14 @@ def update_product_worker(request,pk):
 			return redirect('poducts_worker')
 	context = {'form':form}
 	return render(request, 'ourproject/update_product_worker.html',context)
+def conactus(request):
+	form = FeedbackForm()
+	if request.method == 'POST':
+		form = FeedbackForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('homepage')
+		else:
+			messages.info(request, 'the info is not valid')
+	context = {'form': form}
+	return render(request, 'ourproject/contactus.html', context)
