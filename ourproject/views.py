@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate
+from itertools import count, repeat,chain
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -133,7 +134,57 @@ def view_order(request):
 	# customer =Customer.objects.all()
 	ord = {'order': order}
 	return render(request, 'ourproject/order_list.html', ord)
+def work_schedule(request):
+	shift_assignments = WeekDayShift.objects.order_by('shift__shift_name','day__day_name').values_list('shift__shift_id','day__day_id','worker_name')
+	lis=WeekDay.objects.all().order_by('day_id').values_list('day_name')
+	shift_assignment_list = []
+	ll=['shifts/Days:']
+	for i in lis:
+		ll.append(i)
+	shift_assignment_list.append(ll)
+	# shift_assignment_list.append(lis)
+	shii1=['shift1']
+	shii2=['shift2']
+	shii3=['shift3']
+	shift_assignment_list.append(shii1)
+	shift_assignment_list.append(shii2)
+	shift_assignment_list.append(shii3)
+	for shift in shift_assignments:
+		index = [shift[2]]
+		if shift[0]==1:
+			shift_assignment_list[1].append(shift[2])
+		if shift[0]==2:
+			shift_assignment_list[2].append(shift[2])
+		if shift[0]==3:
+			shift_assignment_list[3].append(shift[2])
 
+	context={'shift_assignment_list':shift_assignment_list}
+	return render(request, 'ourproject/buildschedule_forAdmin.html', context)
+
+def addtoworkschedule(request):
+	form = shiftsForm()
+	if request.method == 'POST':
+		day = request.POST.get('day')
+		worker=request.POST.get('worker_name')
+		shift=request.POST.get('shift')
+		instance = WeekDayShift.objects.filter(day=day).filter(worker_name=worker).filter(shift=shift)
+		users_in_groub = Group.objects.get(name='Worker').user_set.all()
+		ww=users_in_groub.filter(username=worker)
+		if ww:
+			if not instance:
+				form = shiftsForm(request.POST)
+				if form.is_valid():
+					form.save()
+					return redirect('work_schedule')
+				else:
+					messages.info(request, 'the info is not valid')
+			else:
+				messages.info(request, 'this shift for some one else already exsited')
+		else:
+			messages.info(request, 'this is not our worker')
+
+	context = {'form': form}
+	return render(request, 'ourproject/add_to_work_schedule.html', context)
 def add_product_worker(request):
 	form=ProductForm()
 	if request.method=='POST':
