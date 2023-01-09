@@ -45,14 +45,15 @@ def logincustomer(request):
             messages.info(request, 'username OR password incorrert')
     context = {}
     return render(request, 'ourproject/login_customer.html', context)
-
-
 def logoutcustomer(request):
     logout(request)
     return redirect('login')
-
-
-# this functions do the work of the log in
+def logoutadmin(request):
+	logout(request)
+	return redirect('loginAdmin')
+def logoutworker(request):
+	logout(request)
+	return redirect('logoutworker')
 @unauthenticated_user
 def loginAdmin(request):
     if request.method == 'POST':
@@ -92,8 +93,6 @@ def loginWorker(request):
 
 def home(request):
     return render(request, 'ourproject/dashboard.html')
-
-
 @login_required(login_url='loginAdmin')
 @only_customer
 def homepage(request):
@@ -146,7 +145,7 @@ def view_customer(request):
 
 def deleteworker(request, pk):
     context = {}
-    return render(request, 'accounts/delete.html', context)
+    return render(request, 'ourproject/delete.html', context)
 
 
 def view_order(request):
