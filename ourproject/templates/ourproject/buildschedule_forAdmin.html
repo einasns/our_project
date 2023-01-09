@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CRM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
+
+</head>
+<body >
+	{%  include 'ourproject/navbar_admin.html' %}
+{#  {% for day in days %}#}
+{#  <p>day : {{day.daysName}}<p>#}
+{#  <p> : Shifts#}
+{#   {% for shift in day.shifts.all %}#}
+{#     <span>{{shift.shift_name}}</span>#}
+{#   {% endfor %}#}
+{#  </p>#}
+{#{% endfor %}#}
+{#    <div class="logo"></div>#}
+{#<div class="login-block" >#}
+{#    <h1>Add Product</h1>#}
+{#    <form method="POST" action="">#}
+{#        {% csrf_token %}#}
+{#        {{ form.worker_name }}#}
+{#        {{ form.shift }}#}
+{#        {{ form.day}}#}
+{#<div class="form-group col-md-12 mb-3" >#}
+{#        <label for="{{ form.category.label }}">{{ form.category.label }}: </label>#}
+{#        {{ form.category }}#}
+{#    </div>{#        <p class="dropdown-menu">{{ form.category }}</p>#}
+{#        {{ form.description }}#}
+{#        <input class="btn login_btn" type="submit" value="Add Product">#}
+{#    </form>#}
+{#    {% for message in messages %}#}
+{#        <p id="messages">{{ message }}</p>#}
+{##}
+{#    {% endfor %}#}
+
+{# <table class="table" style="padding: 0px; margin: 0px;">#}
+{#    <tr style="border-bottom: 1px solid black">#}
+{#    {% for date in dates %}#}
+{#        <td style="min-width: 200px;">{{date.date}}</td>#}
+{#    {% endfor %}#}
+{#    </tr>#}
+{#    <tr>#}
+{#        {% for employee in shift_assignment_list %}#}
+{#        <td style="min-width: 200px">#}
+{#            {% if employee != 0 %}#}
+{#            {{employee}}#}
+{#            {% endif %}#}
+{#        </td>#}
+{#    {% if forloop.counter|divisibleby:84 %}#}
+{#    </tr>#}
+{#    <tr>#}
+{#    {% endif %}#}
+{#    {% endfor %}#}
+{#    </tr>#}
+{#</table>#}
+
+<br>
+<div class="row">
+   <div class="col-md">
+      <div class="card card-body">
+         <h5>work schedule</h5>
+      </div>
+      <div class="card card-body">
+
+         <table class="table">
+
+         <tr>
+
+         {% for shift in shift_assignment_list %}
+             <tr>
+                 {% for i in shift %}
+                     <td><th>{{i}}</th></td>
+                 {% endfor %}
+
+             </td>
+                  {% endfor %}
+         </tr>
+{#         <tr>#}
+{#         <td>shifts/Days:</td>#}
+{#         {% for i in weekday %}#}
+{#             <td>#}
+{#             <th>{{i.day_name}}</th>#}
+{#             </td>#}
+{#                  {% endfor %}#}
+{#         </tr>#}
+{#         <td>#}
+{#         {% for i in shift %}#}
+{#             <tr><th>{{ i.shift_name }}</th>#}
+{#             </tr>#}
+{#                  {% endfor %}#}
+{#         </td>#}
+{#         <td>#}
+{#         {% for i in workersname %}#}
+{#             <tr><th>{{ i }}</th>#}
+{#             </tr>#}
+{#                  {% endfor %}#}
+{#         </td>#}
+
+         </table>
+
+                   <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'addtoworkschedule'%}">Update add to scedule</a></td>
+
+      </div>
+   </div>
+</div>
+</body>

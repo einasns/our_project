@@ -7,7 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
-from .forms import CreatUserForm
+from itertools import count, repeat, chain
+from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm
 from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
 
 
@@ -37,7 +38,7 @@ def logincustomer(request):
             users_in_group = Group.objects.get(name='Customer').user_set.all()
             if user in users_in_group:
                 login(request, user)
-                return redirect('homepage_customer')
+                return redirect('homepage')
             else:
                 messages.info(request, 'username OR password incorrert')
         else:
@@ -111,14 +112,16 @@ def homepage_worker(request):
     return render(request, 'ourproject/homepage_worker.html')
 
 
-def homepage_customer(request):
-    return render(request, 'ourproject/homepage_customer.html')
-
-
-def products(request):
+def products_worker(request):
     products = Product.objects.all()
 
-    return render(request, 'ourproject/product.html', {'products': products})
+    return render(request, 'ourproject/product_for_worker.html', {'products': products})
+
+
+def Admin_Reviewproduct_list(request):
+    products = Product.objects.all()
+
+    return render(request, 'ourproject/Admin_Reviewproduct_list.html', {'products': products})
 
 
 def customer(request):
@@ -134,36 +137,141 @@ def workers(request):
     return render(request, 'ourproject/workers.html', wor)
 
 
-'''
-def delete_product(request, bar_code):
-    product = Product.objects.get(pr=bar_code)
-    product.delete()
-	return redirect('customer')
-
-def add_product(request):
-	submitted=False
-	if request.method
-'''
+def view_customer(request):
+    users_in_group = Group.objects.get(name='Customer').user_set.all()
+    # customer =Customer.objects.all()
+    cus = {'users_in_group': users_in_group}
+    return render(request, 'ourproject/customer_list.html', cus)
 
 
-def add(request, bar_code, pop):
-    originalObj = products.objects.get(id=bar_code)
-    if originalObj.amount == 0:
-        productsForCustomer = products.objects.all();
-        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
-    else:
-        originalObj.amount = pop + 1
-        originalObj.save()
-        productsForCustomer = products.objects.all();
-        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
+def deleteworker(request, pk):
+    context = {}
+    return render(request, 'accounts/delete.html', context)
 
 
-def delete(request, bar_code, pop):
-    originalObj = products.objects.get(id=bar_code)
-    if originalObj.amount == 0:
-        productsForCustomer = products.objects.all();
-        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
-    originalObj.amount = pop - 1
-    originalObj.save()
-    productsForCustomer = products.objects.all();
-    return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
+def view_order(request):
+    order = Order.objects.all()
+    # customer =Customer.objects.all()
+    ord = {'order': order}
+    return render(request, 'ourproject/order_list.html', ord)
+
+
+def work_schedule(request):
+    shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
+        'shift__shift_id', 'day__day_id', 'worker_name')
+    lis = WeekDay.objects.all().order_by('day_id').values_list('day_name')
+    shift_assignment_list = []
+    ll = ['shifts/Days:']
+    for i in lis:
+        ll.append(i)
+    shift_assignment_list.append(ll)
+    # shift_assignment_list.append(lis)
+    shii1 = ['shift1']
+    shii2 = ['shift2']
+    shii3 = ['shift3']
+    shift_assignment_list.append(shii1)
+    shift_assignment_list.append(shii2)
+    shift_assignment_list.append(shii3)
+    for shift in shift_assignments:
+        index = [shift[2]]
+        if shift[0] == 1:
+            shift_assignment_list[1].append(shift[2])
+        if shift[0] == 2:
+            shift_assignment_list[2].append(shift[2])
+        if shift[0] == 3:
+            shift_assignment_list[3].append(shift[2])
+
+    context = {'shift_assignment_list': shift_assignment_list}
+    return render(request, 'ourproject/buildschedule_forAdmin.html', context)
+
+
+def addtoworkschedule(request):
+    form = shiftsForm()
+    if request.method == 'POST':
+        day = request.POST.get('day')
+        worker = request.POST.get('worker_name')
+        shift = request.POST.get('shift')
+        instance = WeekDayShift.objects.filter(day=day).filter(worker_name=worker).filter(shift=shift)
+        users_in_groub = Group.objects.get(name='Worker').user_set.all()
+        ww = users_in_groub.filter(username=worker)
+        if ww:
+            if not instance:
+                form = shiftsForm(request.POST)
+                if form.is_valid():
+                    form.save()
+                    return redirect('work_schedule')
+                else:
+                    messages.info(request, 'the info is not valid')
+            else:
+                messages.info(request, 'this shift for some one else already exsited')
+        else:
+            messages.info(request, 'this is not our worker')
+
+    context = {'form': form}
+    return render(request, 'ourproject/add_to_work_schedule.html', context)
+
+
+def add_product_worker(request):
+    form = ProductForm()
+    if request.method == 'POST':
+        bar_code = request.POST.get('bar_code')
+        instance = Product.objects.filter(bar_code=bar_code)
+        if not instance:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('poducts_worker')
+            else:
+                messages.info(request, 'the info is not valid')
+        else:
+            messages.info(request, 'this product already exsited')
+    context = {'form': form}
+    return render(request, 'ourproject/add_product_worker.html', context)
+
+
+def add_product_admin(request):
+    form = ProductForm()
+    if request.method == 'POST':
+        bar_code = request.POST.get('bar_code')
+        instance = Product.objects.filter(bar_code=bar_code)
+        if not instance:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('Admin_Reviewproduct_list')
+            else:
+                messages.info(request, 'the info is not valid')
+        else:
+            messages.info(request, 'this product already exsited')
+    context = {'form': form}
+    return render(request, 'ourproject/add_product_admin.html', context)
+
+
+def update_product_worker(request, pk):
+    product = Product.objects.get(bar_code=pk)
+    form = ProductFormUPdate(instance=product)
+    if request.method == 'POST':
+        form = ProductFormUPdate(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('poducts_worker')
+    context = {'form': form}
+    return render(request, 'ourproject/update_product_worker.html', context)
+
+
+def delete_product_admin(request, pk):
+    product = Product.objects.get(bar_code=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('Admin_Reviewproduct_list')
+    context = {'item': product}
+    return render(request, 'ourproject/delete_product_admin.html', context)
+
+
+def delete_product_worker(request, pk):
+    product = Product.objects.get(bar_code=pk)
+    if request.method == 'POST':
+        product.delete()
+        return redirect('poducts_worker')
+    context = {'item': product}
+    return render(request, 'ourproject/delete_product_worker.html', context)
