@@ -47,12 +47,35 @@ def logincustomer(request):
     return render(request, 'ourproject/login_customer.html', context)
 
 
+	users_in_group = Group.objects.get(name='Customer').user_set.all()
+	if request.method=='POST':
+		username=request.POST.get('Username')
+		password=request.POST.get('Password')
+		user=authenticate(request,username=username,password=password)
+		if user is not None:
+			if user in users_in_group:
+				login(request,user)
+				return redirect('homepage')
+			else:
+				messages.info(request, 'Username OR Password incorrert')
+		else:
+			messages.info(request,'username OR password incorrert')
+	context={}
+	return render(request, 'ourproject/login_customer.html',context)
 def logoutcustomer(request):
     logout(request)
     return redirect('login')
 
 
 # this functions do the work of the log in
+	logout(request)
+	return redirect('login')
+def logoutadmin(request):
+	logout(request)
+	return redirect('loginAdmin')
+def logoutworker(request):
+	logout(request)
+	return redirect('logoutworker')
 @unauthenticated_user
 def loginAdmin(request):
     if request.method == 'POST':

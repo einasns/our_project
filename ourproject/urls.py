@@ -10,6 +10,8 @@ urlpatterns = [
 
     path('login/', views.logincustomer,name='login'),
     path('logoutcustomer/', views.logoutcustomer, name='logout'),
+    path('logoutadmin/', views.logoutadmin, name='logoutadmin'),
+    path('logoutworker/', views.logoutworker, name='logoutworker'),
 
     path('loginAdmin/', views.loginAdmin,name='loginadmin'),
     path('loginWorker/', views.loginWorker,name='loginWorker'),
