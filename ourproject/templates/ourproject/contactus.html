@@ -3,41 +3,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>DESIGN</title>
+	<title>CRM</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
-<body >
-	{%  include 'ourproject/navbar_admin.html' %}
-
-<div class="row">
-   <div class="col-md">
-      <div class="card card-body">
-         <h5>Customers</h5>
-      </div>
-      <div class="card card-body">
-         <table class="table">
-            <tr>
-                <th>first name</th>
-                <th>last name</th>
-                <th> email </th>
-                <th>username</th>
-            </tr>
-            {% for i in users_in_group %}
-                          <tr>
-                              <td>{{i.first_name}}</td>
-                              <td>{{ i.last_name }}</td>
-                              <td>{{ i.email }}</td>
-                              <td>{{ i.username }}</td>
-
-                          </tr>
-                      {% endfor %}
-         </table>
-      </div>
-   </div>
+<body>
+	{%  include 'ourproject/navbar_customer.html' %}
+<br>
+<div class="logo"></div>
+<div class="login-block">
+    <h1 style="margin-left: 560px">contact us </h1>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div style="width: 150px;height: 50px;margin-left: 600px">{{ form.customer }}</div>
+        <div style="width: 450px;height: 50px;margin-left: 450px">{{ form.feedback }}</div>
+        <input class="btn login_btn" style="width: 100px;height: 50px;margin-left: 610px;background-color: white" type="submit" value="contact us">
+    </form>
 
 </div>
+<script>
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder='fake user name...';
+    form_fields[2].placeholder='contact us...';
+
+    for (var field in form_fields){
+        form_fields[field].className += 'form-control'
+    }
+</script>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
