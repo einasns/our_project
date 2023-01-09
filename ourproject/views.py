@@ -37,7 +37,7 @@ def logincustomer(request):
             users_in_group = Group.objects.get(name='Customer').user_set.all()
             if user in users_in_group:
                 login(request, user)
-                return redirect('homepage')
+                return redirect('homepage_customer')
             else:
                 messages.info(request, 'username OR password incorrert')
         else:
@@ -111,6 +111,10 @@ def homepage_worker(request):
     return render(request, 'ourproject/homepage_worker.html')
 
 
+def homepage_customer(request):
+    return render(request, 'ourproject/homepage_customer.html')
+
+
 def products(request):
     products = Product.objects.all()
 
@@ -140,3 +144,26 @@ def add_product(request):
 	submitted=False
 	if request.method
 '''
+
+
+def add(request, bar_code, pop):
+    originalObj = products.objects.get(id=bar_code)
+    if originalObj.amount == 0:
+        productsForCustomer = products.objects.all();
+        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
+    else:
+        originalObj.amount = pop + 1
+        originalObj.save()
+        productsForCustomer = products.objects.all();
+        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
+
+
+def delete(request, bar_code, pop):
+    originalObj = products.objects.get(id=bar_code)
+    if originalObj.amount == 0:
+        productsForCustomer = products.objects.all();
+        return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
+    originalObj.amount = pop - 1
+    originalObj.save()
+    productsForCustomer = products.objects.all();
+    return render(request, "homepage_customer.html", {'productsForCustomer': productsForCustomer})
