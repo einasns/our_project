@@ -22,6 +22,7 @@ class Worker(models.Model):
 	phone = models.CharField(max_length=200, null=True)
 	address=models.CharField(max_length=200,null=True)
 	worker_id = models.CharField(max_length=9,null=True)
+	# password= models.CharField(max_length=200,null=True)
 	bank_acccount=models.CharField(max_length=16,null=True)
 	date_created = models.DateTimeField(auto_now_add=True, null=True)
 	def __str__(self):

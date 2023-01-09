@@ -9,8 +9,31 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
 <body ></body>
-	{%  include 'ourproject/navbars.html' %}
-<br>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="{% url 'homepage_admin' %}">Design</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link " href="{% url 'customer_list' %}">Customers list<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link " href="{% url 'Admin_Reviewproduct_list' %}">Products list</a>
+       <a class="nav-item nav-link active" href="{% url 'workers' %}">Workers list</a>
+      <a class="nav-item nav-link" href="#">Order list</a>
+{#      <a class="nav-item nav-link" href="#">Delete product</a>#}
+{#      <a class="nav-item nav-link" href="#">Add worker</a>#}
+{#      <a class="nav-item nav-link" href="#">Delete worker</a>#}
+      <a class="nav-item nav-link" href="#">Work schedule</a>
+        <div style="margin-left: 580px">
+            <li class="nav-item">
+        <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+       </li>
+        </div>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">log out</a>
+    </div>
+  </div>
+</nav>
+
 
 <div class="row">
    <div class="col-md">
@@ -20,28 +43,30 @@
       <div class="card card-body">
          <table class="table">
             <tr>
-               <th>full_name</th>
-                <th>user_name</th>
-                <th> phone </th>
-                <th>email</th>
-                <th>address</th>
+               <th> user name</th>
+{#                <th>last name</th>#}
+                <th>name</th>
+                <th> address </th>
+                <th>phone</th>
                 <th>worker_id</th>
-                <th>password</th>
+{#                <th>password</th>#}
                <th>bank_acccount</th>
             </tr>
-            {% for i in Worker %}
+           {% for i in workers_list %}
                           <tr>
-                              <td>{{i.full_name}}</td>
-                              <td>{{ i.user_name }}</td>
-                              <td>{{ i.phone }}</td>
-                              <td>{{ i.email }}</td>
+                              <td>{{i.user}}</td>
+                              <td>{{ i.name }}</td>
                               <td>{{ i.address }}</td>
+                              <td>{{ i.phone}}</td>
                               <td>{{ i.worker_id }}</td>
-                              <td>{{ i.password }}</td>
+{#                              <td>{{ i.password }}</td>#}
                               <td>{{ i.bank_acccount }}</td>
+
                           </tr>
                       {% endfor %}
          </table>
+          <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="{% url 'add_worker' %}">Add worker</a></td>
+
       </div>
    </div>
 

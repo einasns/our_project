@@ -7,8 +7,9 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,CreatWorkrForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
+
 # Create your views here.
 @unauthenticated_user
 def singup(request):
@@ -115,8 +116,10 @@ def customer(request):
 
 
 def workers(request):
-	workers=Worker.objects.all()
-	wor={'workers':Worker}
+	workers_list=Worker.objects.all()
+	# users_in_group = Group.objects.get(name='Worker').user_set.all()
+	# customer =Customer.objects.all()
+	wor= {'workers_list': workers_list}
 	return render(request,'ourproject/workers.html',wor)
 def view_customer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
@@ -160,3 +163,15 @@ def update_product_worker(request,pk):
 			return redirect('poducts_worker')
 	context = {'form':form}
 	return render(request, 'ourproject/update_product_worker.html',context)
+
+def add_worker(request):
+	form = CreatUserForm()
+	if request.method == 'POST':
+		form = CreatUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			username = form.cleaned_data.get('username')
+			group = Group.objects.get(name='Worker')
+			user.groups.add(group)
+	context= {'form':form}
+	return render(request,'ourproject/add_worker.html',context)

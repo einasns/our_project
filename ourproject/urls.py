@@ -7,6 +7,7 @@ urlpatterns = [
     path('products/', views.products_worker, name='poducts_worker'),
     # path('customer/', views.customers,name='customers'),
     path('workers/', views.workers, name='workers'),
+    path('addworker/', views.add_worker, name='add_worker'),
 
     path('login/', views.logincustomer,name='login'),
     path('logoutcustomer/', views.logoutcustomer, name='logout'),
