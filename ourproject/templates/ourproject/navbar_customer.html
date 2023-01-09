@@ -8,7 +8,14 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
 
+        <a class="nav-item nav-link" href="#">best sales</a>
+        <a class="nav-item nav-link" href="#">My orders</a>
+        <a class="nav-item nav-link" href="{% url 'conactus' %}">contact us</a>
+        <a class="nav-item nav-link" href="{% url 'reviewfeedbackcustomer'%}">review feedback</a>
 
+        <li class="nav-item">
+        <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+       ##</li></div>
         <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>
     </div>
   </div>

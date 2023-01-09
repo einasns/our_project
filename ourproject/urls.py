@@ -26,5 +26,9 @@ urlpatterns = [
     path('update_product_worker/<str:pk>/', views.update_product_worker, name='update_product_worker'),
 
     path('singup/', views.singup,name="sigup"),
+    path('work_schedule/', views.work_schedule, name="work_schedule"),
+    path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
+    path('conactus/', views.conactus, name="conactus"),
+    path('reviewfeedbackcustomer/', views.reviewfeedback, name="reviewfeedbackcustomer"),
 
 ]
