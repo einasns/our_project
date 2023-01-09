@@ -10,6 +10,11 @@ admin.site.register(Tag)
 admin.site.register(Order)
 admin.site.register(cart)
 admin.site.register(Feedback)
+# admin.site.register(Work_schedule)
+admin.site.register(Shift)
+admin.site.register(WeekDay)
+admin.site.register(WeekDayShift)
+
 
 
 
