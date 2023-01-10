@@ -28,5 +28,8 @@ urlpatterns = [
     path('singup/', views.singup,name="sigup"),
     path('work_schedule/', views.work_schedule, name="work_schedule"),
     path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
+    path('conactus/', views.conactus, name="conactus"),
+    path('review_my_order/<str:pk>/', views.review_my_order, name='review_my_order'),
+    path('best_sales/', views.best_sales, name="best_sales"),
 
 ]

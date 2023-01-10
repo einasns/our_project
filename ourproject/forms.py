@@ -24,3 +24,7 @@ class shiftsForm(ModelForm):
     class Meta:
         model=WeekDayShift
         fields=['worker_name','shift','day']
+class FeedbackForm(ModelForm):
+    class Meta:
+        model=Feedback
+        fields=['customer','feedback']
