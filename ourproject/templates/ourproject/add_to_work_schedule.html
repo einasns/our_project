@@ -18,17 +18,16 @@
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.worker_name }}
-<div class="form-group col-md-12 mb-3" >
+        <div class="form-group col-md-12 mb-3" >
         <label for="{{ form.shift.label }}">{{ form.shift.label }}: </label>
         {{ form.shift }}
-    </div>
-        <p class="dropdown-menu">{{ form.day }}</p>
+        </div>
         <div class="form-group col-md-12 mb-3" >
         <label for="{{ form.day.label }}">{{ form.day.label }}: </label>
         {{ form.day }}
-    </div>
-        <p class="dropdown-menu">{{ form.day }}</p>
-        <input class="btn login_btn" type="submit" value="Add the shift">
+         </div>
+        <input class="btn login_btn" type="submit" value="Add Product">
+
     </form>
     {% for message in messages %}
         <p id="messages">{{ message }}</p>
