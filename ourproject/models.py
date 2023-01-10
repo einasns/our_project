@@ -31,18 +31,6 @@ class Worker(models.Model):
     def __str__(self):
         return self.name
 
-
-# we don't need this any more
-	user=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
-	name=models.CharField(max_length=200, null=True)
-	phone = models.CharField(max_length=200, null=True)
-	address=models.CharField(max_length=200,null=True)
-	worker_id = models.CharField(max_length=9,null=True)
-	# password= models.CharField(max_length=200,null=True)
-	bank_acccount=models.CharField(max_length=16,null=True)
-	date_created = models.DateTimeField(auto_now_add=True, null=True)
-	def __str__(self):
-		return self.name
 #we don't need this any more
 # class Admin(models.Model):
 # 	user_name=models.CharField(max_length=200,null=True)

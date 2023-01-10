@@ -8,31 +8,10 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
-<body ></body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'homepage_admin' %}">Design</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link " href="{% url 'customer_list' %}">Customers list<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link " href="{% url 'Admin_Reviewproduct_list' %}">Products list</a>
-       <a class="nav-item nav-link active" href="{% url 'workers' %}">Workers list</a>
-      <a class="nav-item nav-link" href="#">Order list</a>
-{#      <a class="nav-item nav-link" href="#">Delete product</a>#}
-{#      <a class="nav-item nav-link" href="#">Add worker</a>#}
-{#      <a class="nav-item nav-link" href="#">Delete worker</a>#}
-      <a class="nav-item nav-link" href="#">Work schedule</a>
-        <div style="margin-left: 580px">
-            <li class="nav-item">
-        <a class="nav-link" href="#">Welcome, {{user.username}}</a>
-       </li>
-        </div>
-        <a class="nav-item nav-link" href="{% url 'logout' %}">log out</a>
-    </div>
-  </div>
-</nav>
+
+  <body ></body>
+	{%  include 'ourproject/navbar_admin.html' %}
+
 
 
 <div class="row">
