@@ -1,55 +1,60 @@
-{% load static %}
-
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
-
-
-</head>
-<body>
-	{%  include 'ourproject/navbar_admin.html' %}
-
 {% load static %}
+
+<html>
+<head>
+	<title>DESIGN</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
+</head>
+<body ></body>
+	{%  include 'ourproject/navbar_admin.html' %}
 
 <div class="row">
    <div class="col-md">
       <div class="card card-body">
-         <h5>Customers</h5>
+         <h5>Products</h5>
       </div>
       <div class="card card-body">
          <table class="table">
             <tr>
-                <th>name</th>
-                <th>bar_code</th>
-                <th> price </th>
-                <th>amount</th>
-                <th>category</th>
+               <th>Product</th>
+                <th>Bar code</th>
+                <th>Amount</th>
+                <th>Price</th>
+               <th>Category</th>
+                <th>Description</th>
+                <th>update product</th>
+               <th>Delete product</th>
+
             </tr>
             {% for i in products %}
                           <tr>
                               <td>{{i.name}}</td>
                               <td>{{ i.bar_code }}</td>
-                              <td>{{ i.price }}</td>
                               <td>{{ i.amount }}</td>
-                              <td>{{ i.CATEGORY }}</td>
+                              <td>{{ i.price }}</td>
+                              <td>{{ i.category }}</td>
+                              <td>{{ i.description }}</td>
+                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'update_product_worker' i.bar_code %}">Update product</a></td>
+                             <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'delete_product_admin' i.bar_code %}">Delete product</a></td>
+
                           </tr>
                       {% endfor %}
          </table>
-      </div>
+
    </div>
-
 </div>
-<br>
+           <div style="margin-left: 580px">
 
-
+       <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="{% url 'add_product_admin' %}">Add product</a></td>
+        <div/>
 </div>
+</div>
+
+
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
