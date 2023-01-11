@@ -35,4 +35,7 @@ urlpatterns = [
     path('delete_product_admin/<str:pk>/', views.delete_product_admin, name="delete_product_admin"),
     path('delete_product_worker/<str:pk>/', views.delete_product_worker, name="delete_product_worker"),
     path('conactus/', views.conactus, name="conactus"),
+    path('review_my_order/<str:pk>/', views.review_my_order, name='review_my_order'),
+    path('best_sales/', views.best_sales, name="best_sales"),
+
 ]

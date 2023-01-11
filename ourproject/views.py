@@ -3,21 +3,13 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
-
-from itertools import count, repeat, chain
-from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm
-from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
-
-
 from itertools import count, repeat,chain
 from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,CreatWorkrForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
-
 # Create your views here.
 @unauthenticated_user
 def singup(request):
@@ -282,6 +274,28 @@ def delete_product_worker(request, pk):
     return render(request, 'ourproject/delete_product_worker.html', context)
 
 
+	form = shiftsForm()
+	if request.method=='POST':
+		day_1 = request.POST.get('day')
+		worker_name_1=request.POST.get('worker_name')
+		shift_1=request.POST.get('shift')
+		instance = WeekDayShift.objects.filter(day=day_1).filter(worker_name=worker_name_1).filter(shift=shift_1)
+		users_in_groub = Group.objects.get(name='Worker').user_set.all()
+		ww = users_in_groub.filter(username=worker_name_1)
+		if ww:
+			if not instance:
+				form = shiftsForm(request.POST)
+				if form.is_valid():
+					form.save()
+					return redirect('work_schedule')
+				else:
+					messages.info(request, 'the info is not valid')
+			else:
+				messages.info(request, 'this shift for some one else already exsited')
+		else:
+			messages.info(request, 'this is not our worker')
+	context = {'form':form}
+	return render(request, 'ourproject/add_to_work_schedule.html',context)
 def add_product_worker(request):
 	form=ProductForm()
 	if request.method=='POST':
@@ -366,3 +380,23 @@ def add_worker2(request):
 #             else:
 #                 return redirect('index')
 
+
+def review_my_order(request,pk):
+	use=User.objects.get(username=pk)
+	order = Order.objects.filter(customer=use)
+	context = {'order':order}
+	return render(request, 'ourproject/review_myorder_customrt.html', context)
+def best_sales(request):
+	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
+	bestsales=[]
+	allprdduct=Product.objects.all()
+
+	for i in allprdduct:
+		product_amont=[i,0]
+		bestsales.append(product_amont)
+	for j in bestsales:
+		for shift in products:
+			if shift[0]==j[0].bar_code:
+				j[1]=j[1]+shift[1]
+
+	return render(request, 'ourproject/bestsales.html', {'bestsales':bestsales})
