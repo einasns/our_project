@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from itertools import count, repeat,chain
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm,CreatWorkrForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -273,7 +273,7 @@ def delete_product_worker(request, pk):
     context = {'item': product}
     return render(request, 'ourproject/delete_product_worker.html', context)
 
-
+def addtoworkschedule(request):
 	form = shiftsForm()
 	if request.method=='POST':
 		day_1 = request.POST.get('day')
