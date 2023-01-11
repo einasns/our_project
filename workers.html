@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CRM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body ></body>
+	{%  include 'ourproject/navbars.html' %}
+<br>
+
+<div class="row">
+   <div class="col-md">
+      <div class="card card-body">
+         <h5>workers</h5>
+      </div>
+      <div class="card card-body">
+         <table class="table">
+            <tr>
+               <th>full_name</th>
+                <th>user_name</th>
+                <th> phone </th>
+                <th>email</th>
+                <th>address</th>
+                <th>worker_id</th>
+                <th>password</th>
+               <th>bank_acccount</th>
+            </tr>
+            {% for i in Worker %}
+                          <tr>
+                              <td>{{i.full_name}}</td>
+                              <td>{{ i.user_name }}</td>
+                              <td>{{ i.phone }}</td>
+                              <td>{{ i.email }}</td>
+                              <td>{{ i.address }}</td>
+                              <td>{{ i.worker_id }}</td>
+                              <td>{{ i.password }}</td>
+                              <td>{{ i.bank_acccount }}</td>
+                          </tr>
+                      {% endfor %}
+         </table>
+      </div>
+   </div>
+
+</div>
