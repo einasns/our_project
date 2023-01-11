@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CRM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+</head>
+<body ></body>
+
+	{%  include 'ourproject/navbar_admin.html' %}
+
+<div class="row">
+   <div class="col-md">
+      <div class="card card-body">
+         <h5>orders</h5>
+      </div>
+      <div class="card card-body">
+         <table class="table">
+            <tr>
+                <th>order number</th>
+                <th>price</th>
+                <th> amount </th>
+                <th>customer</th>
+                <th>product</th>
+            </tr>
+            {% for i in order %}
+                          <tr>
+                              <td>{{i.order_number}}</td>
+                              <td>{{ i.price }}</td>
+                              <td>{{ i.amount }}</td>
+                              <td>{{ i.customer }}</td>
+                              <td>{{ i.product }}</td>
+
+
+                          </tr>
+                      {% endfor %}
+         </table>
+      </div>
+   </div>
+
+</div>
