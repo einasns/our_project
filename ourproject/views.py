@@ -382,3 +382,13 @@ def search_worker(request):
 
     return render(request, 'worker_search.html')
 
+
+class search_worke(workers_list):
+  model=Product
+  template_name= 'homepage_admin.html'
+  context_object_name='posts'
+
+  def get_queryset(self):
+      query=self.request.GET.get('q')
+      return Worker.objects.filter(name=query).order_by('date_created')
+

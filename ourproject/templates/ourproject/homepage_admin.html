@@ -10,7 +10,12 @@
 </head>
 <body id="bg" style="background-image: url('{% static "images/a.jpeg" %}');"></body>
 	{%  include 'ourproject/navbar_admin.html' %}
-    {% include 'ourproject/worker_search.html' %}
+<form action="{% url 'search_worker' %}" method="get">
+{% csrf_token %}
+    <input type="text" name="q" placeholder="Search worker">
+    <button type="submit">Search Worker</button>
+
+</form>
 
 
 </body>
