@@ -185,6 +185,7 @@ def addtoworkschedule(request):
 
 	context = {'form': form}
 	return render(request, 'ourproject/add_to_work_schedule.html', context)
+
 def add_product_worker(request):
 	form=ProductForm()
 	if request.method=='POST':
@@ -201,6 +202,23 @@ def add_product_worker(request):
 			messages.info(request, 'this product already exsited')
 	context = {'form':form}
 	return render(request, 'ourproject/add_product_worker.html',context)
+
+def add_product_admin(request):
+    form = ProductForm()
+    if request.method == 'POST':
+        bar_code = request.POST.get('bar_code')
+        instance = Product.objects.filter(bar_code=bar_code)
+        if not instance:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('Admin_Reviewproduct_list')
+            else:
+                messages.info(request, 'the info is not valid')
+        else:
+            messages.info(request, 'this product already exsited')
+    context = {'form': form}
+    return render(request, 'ourproject/add_product_admin.html',context)
 def update_product_worker(request,pk):
 	product=Product.objects.get(bar_code=pk)
 	form=ProductFormUPdate(instance=product)
@@ -211,6 +229,22 @@ def update_product_worker(request,pk):
 			return redirect('poducts_worker')
 	context = {'form':form}
 	return render(request, 'ourproject/update_product_worker.html',context)
+
+def	delete_product_admin(request, pk):
+	product = Product.objects.get(bar_code=pk)
+	if request.method == 'POST':
+		product.delete()
+		return redirect('Admin_Reviewproduct_list')
+	context = {'item': product}
+	return render(request, 'ourproject/delete_product_admin.html', context)
+
+def delete_product_worker(request, pk):
+	product = Product.objects.get(bar_code=pk)
+	if request.method == 'POST':
+		product.delete()
+		return redirect('poducts_worker')
+	context = {'item': product}
+	return render(request, 'ourproject/delete_product_worker.html',context)
 def conactus(request):
 	form = FeedbackForm()
 	if request.method == 'POST':
@@ -224,7 +258,10 @@ def conactus(request):
 	return render(request, 'ourproject/contactus.html', context)
 
 def reviewfeedback(request):
-
 	feedback=Feedback.objects.all()
+	context={'feedback':feedback}
+	return render(request, 'ourproject/review_feedback_customer.html',context)
 
-	return render(request, 'ourproject/review_feedback_customer.html', {'feedback':feedback})
+def editprofile(request):
+	feedback = Feedback.objects.all()
+	return render(request, 'ourproject/worker_edit_profile.html.html', context)
