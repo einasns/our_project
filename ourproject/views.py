@@ -8,14 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 
+
 from itertools import count, repeat, chain
 from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm
 from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
 
+from itertools import count, repeat, chain
+from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm, FeedbackForm
+from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
 
-from itertools import count, repeat,chain
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm
-from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 
 # Create your views here.
 @unauthenticated_user
@@ -43,22 +44,30 @@ def logincustomer(request):
             users_in_group = Group.objects.get(name='Customer').user_set.all()
             if user in users_in_group:
                 login(request, user)
-                return redirect('homepage')
+                return redirect('homepage_customer')
             else:
                 messages.info(request, 'username OR password incorrert')
         else:
             messages.info(request, 'username OR password incorrert')
     context = {}
     return render(request, 'ourproject/login_customer.html', context)
+
+
 def logoutcustomer(request):
     logout(request)
     return redirect('login')
+
+
 def logoutadmin(request):
-	logout(request)
-	return redirect('loginAdmin')
+    logout(request)
+    return redirect('loginAdmin')
+
+
 def logoutworker(request):
-	logout(request)
-	return redirect('logoutworker')
+    logout(request)
+    return redirect('logoutworker')
+
+
 @unauthenticated_user
 def loginAdmin(request):
     if request.method == 'POST':
@@ -98,6 +107,8 @@ def loginWorker(request):
 
 def home(request):
     return render(request, 'ourproject/dashboard.html')
+
+
 @login_required(login_url='loginAdmin')
 @only_customer
 def homepage(request):
@@ -107,6 +118,8 @@ def homepage(request):
 @login_required(login_url='login')
 @admin_only
 def homepage_admin(request):
+
+
     return render(request, 'ourproject/homepage_admin.html')
 
 
@@ -114,6 +127,11 @@ def homepage_admin(request):
 @only_worker
 def homepage_worker(request):
     return render(request, 'ourproject/homepage_worker.html')
+
+
+def homepage_customer(request):
+    products = Product.objects.all()
+    return render(request, 'ourproject/homepage_customer.html', {'products': products})
 
 
 def products_worker(request):
@@ -138,7 +156,9 @@ def customer(request):
 def workers(request):
     workers = Worker.objects.all()
     wor = {'workers': Worker}
+
     return render(request, 'ourproject/workers.html', wor)
+
 
 
 def view_customer(request):
@@ -282,40 +302,83 @@ def delete_product_worker(request, pk):
 
 
 def add_product_worker(request):
-	form=ProductForm()
-	if request.method=='POST':
-		bar_code = request.POST.get('bar_code')
-		instance = Product.objects.filter(bar_code=bar_code)
-		if not instance:
-			form = ProductForm(request.POST)
-			if form.is_valid():
-				form.save()
-				return redirect('poducts_worker')
-			else:
-				messages.info(request, 'the info is not valid')
-		else:
-			messages.info(request, 'this product already exsited')
-	context = {'form':form}
-	return render(request, 'ourproject/add_product_worker.html',context)
-def update_product_worker(request,pk):
-	product=Product.objects.get(bar_code=pk)
-	form=ProductFormUPdate(instance=product)
-	if request.method=='POST':
-		form = ProductFormUPdate(request.POST,instance=product)
-		if form.is_valid():
-			form.save()
-			return redirect('poducts_worker')
-	context = {'form':form}
-	return render(request, 'ourproject/update_product_worker.html',context)
+    form = ProductForm()
+    if request.method == 'POST':
+        bar_code = request.POST.get('bar_code')
+        instance = Product.objects.filter(bar_code=bar_code)
+        if not instance:
+            form = ProductForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('poducts_worker')
+            else:
+                messages.info(request, 'the info is not valid')
+        else:
+            messages.info(request, 'this product already exsited')
+    context = {'form': form}
+    return render(request, 'ourproject/add_product_worker.html', context)
+
+
+def update_product_worker(request, pk):
+    product = Product.objects.get(bar_code=pk)
+    form = ProductFormUPdate(instance=product)
+    if request.method == 'POST':
+        form = ProductFormUPdate(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            return redirect('poducts_worker')
+    context = {'form': form}
+    return render(request, 'ourproject/update_product_worker.html', context)
+
+
 def conactus(request):
-	form = FeedbackForm()
-	if request.method == 'POST':
-		form = FeedbackForm(request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect('homepage')
-		else:
-			messages.info(request, 'the info is not valid')
-	context = {'form': form}
-	return render(request, 'ourproject/contactus.html', context)
+    form = FeedbackForm()
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+        else:
+            messages.info(request, 'the info is not valid')
+    context = {'form': form}
+    return render(request, 'ourproject/contactus.html', context)
+
+
+def workhours_schedule(request):
+    shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
+        'shift__shift_id', 'day__day_id', 'worker_name')
+    lis = WeekDay.objects.all().order_by('day_id').values_list('day_name')
+    shift_assignment_list = []
+    ll = ['shifts/Days:']
+    for i in lis:
+        ll.append(i)
+    shift_assignment_list.append(ll)
+    # shift_assignment_list.append(lis)
+    shii1 = ['shift1']
+    shii2 = ['shift2']
+    shii3 = ['shift3']
+    shift_assignment_list.append(shii1)
+    shift_assignment_list.append(shii2)
+    shift_assignment_list.append(shii3)
+    for shift in shift_assignments:
+        index = [shift[2]]
+        if shift[0] == 1:
+            shift_assignment_list[1].append(shift[2])
+        if shift[0] == 2:
+            shift_assignment_list[2].append(shift[2])
+        if shift[0] == 3:
+            shift_assignment_list[3].append(shift[2])
+
+    context = {'shift_assignment_list': shift_assignment_list}
+    return render(request, 'ourproject/worker_reviewworkhour.html', context)
+
+
+def search_worker(request):
+    if request.method == 'POST':
+        query_name = request.POST.get('name', None)
+        if query_name:
+            results = Worker.objects.filter(name__contains=query_name)
+            return render(request, 'worker_search.html', {"results":results})
+
+    return render(request, 'worker_search.html')
 

@@ -1,18 +1,96 @@
+<!DOCTYPE html>
 {% load static %}
 
-<!DOCTYPE html>
 <html>
 <head>
 	<title>DESIGN</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/login.css' %}">
+<style>
+    .card {
+      background:#F5F5F5;
+      box-shadow: 0 4px 8px 0 #FFF5EE;
+      transition: 0.3s;
+      padding:10px;
+      border-radius: 5px;
+        width:300px;
+        margin:10px;
+        max-width:370px;
+        background-color: bisque;
+    }
+    .card > img{
+        width:100%;
+    }
+
+    .card:hover {
+        background:#D2B48C;
+      box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+      margin: 12 auto;
+    }
+
+    .container {
+        {% comment %} padding: 2px 16px; {% endcomment %}
+        width: 100%;
+    }
+    .cards{
+        display:flex;
+        flex-direction:row;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+    h1{
+        font-size: 20px;
+        color: black;
+        font-weight: bold;
+        padding: 10px 0px ;
+    }
+    h2, h3, h4{
+        font-size: 16px;
+        color: palevioletred;
+        padding: -10px ;
+    }
+h5{
+
+    font-family:georgia,garamond,serif;font-style:inherit">
+    font-size: 80px;
+    padding: 40px 80px;
+    text-align: center;
+}
+a{
+    font-size: 16px;
+    padding: 20px 15px;
+    text-align: center;
+}
+button {
+     background: #7abecc;
+}
+</style>
 </head>
-<body id="bg" style="background-image: url('{% static "images/a.jpeg" %}');"></body>
 
 	{%  include 'ourproject/navbar_customer.html' %}
+{% load static %}
+         <h5>PRODUCTS</h5>
+         <div class="cards">
+            {% for i in products %}
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+                <div class="card">
+            <img src="{{ i.description }}" width="200" height="250"/>
+            <div class="container">
+                <h1>{{i.name}}<h1/>
+                <h2>Bar code: {{ i.bar_code }}</h2>
+                <h3>Price: ${{ i.price }}</h3>
+                <h4>Category: {{ i.category }}</h4>
+                </h1>
+            </div>
+
+                <div>
+                    <a href="#" ><button class="ADD">Add</button></a>
+                </div>
+        </div>
+                      {% endfor %}
+         </div>
+
+</body>
 </html>
