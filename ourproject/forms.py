@@ -22,10 +22,10 @@ class CreatUserForm(UserCreationForm):
         model = User
         fields = ['first_name','last_name','email','username','password1','password2']
 
-class CreatWorkrForm(UserCreationForm):
+class CreatWorkrForm(ModelForm):
     class Meta:
-        model = User
-        fields = ['first_name','last_name','email','username','password1','password2']
+        model = Worker
+        fields = ['user','bank_acccount','name','address','worker_id']
 class shiftsForm(ModelForm):
     class Meta:
         model=WeekDayShift

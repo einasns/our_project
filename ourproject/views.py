@@ -322,13 +322,47 @@ def conactus(request):
 
 
 def add_worker(request):
-	form = CreatUserForm()
-	if request.method == 'POST':
-		form = CreatUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			username = form.cleaned_data.get('username')
-			group = Group.objects.get(name='Worker')
-			user.groups.add(group)
-	context= {'form':form}
-	return render(request,'ourproject/add_worker.html',context)
+    form = CreatUserForm()
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Worker')
+            user.groups.add(group)
+            return redirect('add_worker2')
+    context = {'form': form}
+    return render(request, 'ourproject/add_worker.html', context)
+
+def add_worker2(request):
+    form = CreatWorkrForm()
+    if request.method == 'POST':
+        form = CreatWorkrForm(request.POST)
+        user = request.POST.get('user')
+        instance = Worker.objects.filter(user=user)
+        if not instance:
+            # users_in_groub = Group.objects.get(name='Worker').user_set.all()
+            # if user in users_in_groub:
+                if form.is_valid():
+                    form.save()
+                    return redirect('workers')
+
+    context = {'form': form}
+    return render(request, 'ourproject/add_worker2.html', context)
+
+# def add_to_cart(request, book_id):
+#     if request.user.is_authenticated():
+#         try:
+#             product = Product.objects.get(pk=book_id)
+#         except ObjectDoesNotExist:
+#             pass
+#         else:
+#             try:
+#                 cart = cart.objects.get(user=request.user, active=True)
+#             except ObjectDoesNotExist:
+#                 cart = Cart.objects.create(user=request.user)
+#                 cart.save()
+#                 cart.add_to_cart(book_id)
+#                 return redirect('cart')
+#             else:
+#                 return redirect('index')
+

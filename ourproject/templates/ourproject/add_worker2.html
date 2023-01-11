@@ -17,24 +17,20 @@
     <h1>add worker</h1>
     <form method="POST" action="">
         {% csrf_token %}
-        {{ form.first_name }}
-        {{ form.last_name }}
-        {{ form.email}}
-        {{ form.username }}
-        {{ form.password1 }}
-        {{ form.password2 }}
+        {{ form.user }}
         {{ form.bank_acccount}}
+        {{ form.address}}
+        {{ form.worker_id}}
+        {{ form.name}}
         <input class="btn login_btn" type="submit" value="add worker">
     </form>
 </div>
 <script>
     var form_fields = document.getElementsByTagName('input')
-    form_fields[1].placeholder='firstname...';
-    form_fields[2].placeholder='lastname...';
-    form_fields[3].placeholder='email...';
-    form_fields[4].placeholder='Username...';
-    form_fields[5].placeholder='password...';
-    form_fields[6].placeholder='Re-enter password...';
+    form_fields[1].placeholder='bank_acccount...';
+    form_fields[2].placeholder='address...';
+    form_fields[3].placeholder='worker_id...';
+    form_fields[4].placeholder='name...';
     for (var field in form_fields){
         form_fields[field].className += 'form-control'
     }
