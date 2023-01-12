@@ -34,6 +34,6 @@ urlpatterns = [
     path('delete_product_worker/<str:pk>/', views.delete_product_worker, name="delete_product_worker"),
     path('conactus/', views.conactus, name="conactus"),
     path('work_schedule/', views.work_schedule, name="work_schedule"),
-    path('search_worker/', views.search_worker.as_view(),name='search_worker'),
+    path('search_worker/', views.search_worker,name='search_worker'),
 
 ]

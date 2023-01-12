@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 
-
 from itertools import count, repeat, chain
 from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm
 from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
@@ -118,8 +117,6 @@ def homepage(request):
 @login_required(login_url='login')
 @admin_only
 def homepage_admin(request):
-
-
     return render(request, 'ourproject/homepage_admin.html')
 
 
@@ -158,7 +155,6 @@ def workers(request):
     wor = {'workers': Worker}
 
     return render(request, 'ourproject/workers.html', wor)
-
 
 
 def view_customer(request):
@@ -378,17 +374,7 @@ def search_worker(request):
         query_name = request.POST.get('name', None)
         if query_name:
             results = Worker.objects.filter(name__contains=query_name)
-            return render(request, 'worker_search.html', {"results":results})
+            return render(request, 'worker_search.html', {"results": results})
 
     return render(request, 'worker_search.html')
-
-
-class search_worke(workers_list):
-  model=Product
-  template_name= 'homepage_admin.html'
-  context_object_name='posts'
-
-  def get_queryset(self):
-      query=self.request.GET.get('q')
-      return Worker.objects.filter(name=query).order_by('date_created')
 
