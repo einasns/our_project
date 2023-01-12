@@ -264,4 +264,5 @@ def reviewfeedback(request):
 
 def editprofile(request):
 	feedback = Feedback.objects.all()
+	context = {'feedback': feedback}
 	return render(request, 'ourproject/worker_edit_profile.html.html', context)
