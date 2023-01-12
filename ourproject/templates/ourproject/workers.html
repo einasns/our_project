@@ -8,11 +8,9 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 </head>
-
-  <body ></body>
-	{%  include 'ourproject/navbar_admin.html' %}
-
-
+<body ></body>
+	{%  include 'ourproject/navbars.html' %}
+<br>
 
 <div class="row">
    <div class="col-md">
@@ -22,30 +20,28 @@
       <div class="card card-body">
          <table class="table">
             <tr>
-               <th> user name</th>
-{#                <th>last name</th>#}
-                <th>name</th>
-                <th> address </th>
-                <th>phone</th>
+               <th>full_name</th>
+                <th>user_name</th>
+                <th> phone </th>
+                <th>email</th>
+                <th>address</th>
                 <th>worker_id</th>
-{#                <th>password</th>#}
+                <th>password</th>
                <th>bank_acccount</th>
             </tr>
-           {% for i in workers_list %}
+            {% for i in workers %}
                           <tr>
-                              <td>{{i.user}}</td>
-                              <td>{{ i.name }}</td>
+                              <td>{{i.full_name}}</td>
+                              <td>{{ i.user_name }}</td>
+                              <td>{{ i.phone }}</td>
+                              <td>{{ i.email }}</td>
                               <td>{{ i.address }}</td>
-                              <td>{{ i.phone}}</td>
                               <td>{{ i.worker_id }}</td>
-{#                              <td>{{ i.password }}</td>#}
+                              <td>{{ i.password }}</td>
                               <td>{{ i.bank_acccount }}</td>
-
                           </tr>
                       {% endfor %}
          </table>
-          <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="{% url 'add_worker' %}">Add worker</a></td>
-
       </div>
    </div>
 
