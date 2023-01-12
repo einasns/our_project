@@ -31,8 +31,7 @@ class Worker(models.Model):
     def __str__(self):
         return self.name
 
-
-# we don't need this any more
+#we don't need this any more
 # class Admin(models.Model):
 # 	user_name=models.CharField(max_length=200,null=True)
 # 	pass_word=models.CharField(max_length=200,null=True)

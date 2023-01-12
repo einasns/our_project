@@ -7,11 +7,14 @@ urlpatterns = [
     path('products/', views.products_worker, name='poducts_worker'),
     # path('customer/', views.customers,name='customers'),
     path('workers/', views.workers, name='workers'),
+    path('addworker/', views.add_worker, name='add_worker'),
+    path('addworker2/', views.add_worker2, name='add_worker2'),
 
     path('login/', views.logincustomer,name='login'),
     path('logoutcustomer/', views.logoutcustomer, name='logout'),
     path('logoutadmin/', views.logoutadmin, name='logoutadmin'),
     path('logoutworker/', views.logoutworker, name='logoutworker'),
+
     path('loginAdmin/', views.loginAdmin,name='loginadmin'),
     path('loginWorker/', views.loginWorker,name='loginWorker'),
     path('homepage/',views.homepage,name='homepage'),
@@ -22,6 +25,7 @@ urlpatterns = [
     path('view_customer/',views.customer, name='view_customer'),
     path('delete_worker/<str:pk>/',views.deleteworker, name='delete_worker'),
     path('view_order/',views.view_order, name='view_order'),
+
     path('customers/',views.customer,name='customer_list'),
     path('add_product_worker/', views.add_product_worker, name='add_product_worker'),
     path('add_product_admin/', views.add_product_admin, name='add_product_admin'),
@@ -35,5 +39,8 @@ urlpatterns = [
     path('conactus/', views.conactus, name="conactus"),
     path('work_schedule/', views.work_schedule, name="work_schedule"),
     path('search_worker/', views.search_worker,name='search_worker'),
+
+    path('review_my_order/<str:pk>/', views.review_my_order, name='review_my_order'),
+    path('best_sales/', views.best_sales, name="best_sales"),
 
 ]

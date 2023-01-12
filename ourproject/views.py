@@ -3,10 +3,13 @@ from django.http import HttpResponse
 from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
+from itertools import count, repeat,chain
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm,CreatWorkrForm
+from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 
 from itertools import count, repeat, chain
 from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm
@@ -106,8 +109,6 @@ def loginWorker(request):
 
 def home(request):
     return render(request, 'ourproject/dashboard.html')
-
-
 @login_required(login_url='loginAdmin')
 @only_customer
 def homepage(request):
@@ -151,12 +152,11 @@ def customer(request):
 
 
 def workers(request):
-    workers = Worker.objects.all()
-    wor = {'workers': Worker}
-
-    return render(request, 'ourproject/workers.html', wor)
-
-
+	workers_list=Worker.objects.all()
+	# users_in_group = Group.objects.get(name='Worker').user_set.all()
+	# customer =Customer.objects.all()
+	wor= {'workers_list': workers_list}
+	return render(request,'ourproject/workers.html',wor)
 def view_customer(request):
     users_in_group = Group.objects.get(name='Customer').user_set.all()
     # customer =Customer.objects.all()
@@ -339,7 +339,6 @@ def conactus(request):
     context = {'form': form}
     return render(request, 'ourproject/contactus.html', context)
 
-
 def workhours_schedule(request):
     shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
         'shift__shift_id', 'day__day_id', 'worker_name')
@@ -378,3 +377,69 @@ def search_worker(request):
 
     return render(request, 'worker_search.html')
 
+
+def add_worker(request):
+    form = CreatUserForm()
+    if request.method == 'POST':
+        form = CreatUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            group = Group.objects.get(name='Worker')
+            user.groups.add(group)
+            return redirect('add_worker2')
+    context = {'form': form}
+    return render(request, 'ourproject/add_worker.html', context)
+
+def add_worker2(request):
+    form = CreatWorkrForm()
+    if request.method == 'POST':
+        form = CreatWorkrForm(request.POST)
+        user = request.POST.get('user')
+        instance = Worker.objects.filter(user=user)
+        if not instance:
+            # users_in_groub = Group.objects.get(name='Worker').user_set.all()
+            # if user in users_in_groub:
+                if form.is_valid():
+                    form.save()
+                    return redirect('workers')
+
+    context = {'form': form}
+    return render(request, 'ourproject/add_worker2.html', context)
+
+# def add_to_cart(request, book_id):
+#     if request.user.is_authenticated():
+#         try:
+#             product = Product.objects.get(pk=book_id)
+#         except ObjectDoesNotExist:
+#             pass
+#         else:
+#             try:
+#                 cart = cart.objects.get(user=request.user, active=True)
+#             except ObjectDoesNotExist:
+#                 cart = Cart.objects.create(user=request.user)
+#                 cart.save()
+#                 cart.add_to_cart(book_id)
+#                 return redirect('cart')
+#             else:
+#                 return redirect('index')
+
+
+def review_my_order(request,pk):
+	use=User.objects.get(username=pk)
+	order = Order.objects.filter(customer=use)
+	context = {'order':order}
+	return render(request, 'ourproject/review_myorder_customrt.html', context)
+def best_sales(request):
+	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
+	bestsales=[]
+	allprdduct=Product.objects.all()
+
+	for i in allprdduct:
+		product_amont=[i,0]
+		bestsales.append(product_amont)
+	for j in bestsales:
+		for shift in products:
+			if shift[0]==j[0].bar_code:
+				j[1]=j[1]+shift[1]
+
+	return render(request, 'ourproject/bestsales.html', {'bestsales':bestsales})
