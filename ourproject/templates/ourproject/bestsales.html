@@ -1,6 +1,5 @@
 {% load static %}
 
-<!DOCTYPE html>
 <html>
 <head>
 	<title>CRM</title>
@@ -11,27 +10,34 @@
 
 </head>
 <body ></body>
-	{%  include 'ourproject/navbar_customer.html' %}
+<!--	{%  include 'ourproject/navbar_customer.html' %}-->
 <br>
 
 <div class="row">
    <div class="col-md">
       <div class="card card-body">
-         <h5>Products</h5>
+         <h5>Best Sales</h5>
       </div>
       <div class="card card-body">
          <table class="table">
-               <th>Product</th>
-                <th>sales</th>
-         <tr>
-         {% for shift in bestsales %}
+             <tr>
+               <td><th>Product</th></td>
+               <td><th>sales</th></td>
+               <td><th>Bar code</th></td>
+               <td><th>Price</th></td>
+               <td><th>Amount</th></td>
+               <td>wanna buy</td>
+            </tr>
+             {% for shift in bestsales %}
+             <tr>
                  {% for i in shift %}
                      <td><th>{{i}}</th></td>
                  {% endfor %}
-                  {% endfor %}
-         </tr>
-         </table>
 
+                 <td><a class="btn btn-outline-info"style="background: #383838; color: white;border-block-color: black" href="#">Add to cart</a></td>
+             </tr>
+                  {% endfor %}
+         </table>
    </div>
 </div>
            <div style="margin-left: 580px">

@@ -1,5 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,7 @@
   {%  include 'ourproject/navbar_worker.html' %}
 <div class="logo"></div>
 <div class="login-block" >
-    <h1>Add Product</h1>
+    <h1>Update Product</h1>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.name }}
@@ -41,7 +40,6 @@
     form_fields[3].placeholder='Price...';
     form_fields[4].placeholder='Amout...';
     form_fields[5].placeholder='description...';
-    {#form_fields[6].placeholder='description...';#}
     for (var field in form_fields){
         form_fields[field].className += 'form-control'
     }
