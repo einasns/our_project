@@ -10,14 +10,11 @@
        <li class="nav-item">
         <a class="nav-link" href="#">Welcome, {{user.username}}</a>
        </li>
-      <a class="nav-item nav-link active" href="#">Review work hours<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Review product list</a>
-      <a class="nav-item nav-link" href="#">Review order list</a>
+      <a class="nav-item nav-link active" href="#">work hours<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="{% url 'poducts_worker' %}">product list</a>
+      <a class="nav-item nav-link" href="#">order list</a>
       <a class="nav-item nav-link" href="#">Edit profile</a>
-      <a class="nav-item nav-link" href="#">add products</a>
-      <a class="nav-item nav-link" href="#">Update products</a>
-      <a class="nav-item nav-link" href="#">View feedback</a>
-      <a class="nav-item nav-link" href="#">Search product</a>
+      <a class="nav-item nav-link" href="{% url 'worker_view_feedback' %}">feedback</a>
         {% if user.is_authenticated %}
 
       <li class="nav-item">

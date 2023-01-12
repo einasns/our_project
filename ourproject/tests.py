@@ -103,3 +103,6 @@ class singupTest(TestCase):
     def testsingupAccessNameNegative(self):
         response = self.client.get(reverse('sigup'))
         self.assertNotEqual(response.status_code, 300)
+
+# class workersTest(TestCase):
+#     def

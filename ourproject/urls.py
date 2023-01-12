@@ -37,5 +37,6 @@ urlpatterns = [
     path('conactus/', views.conactus, name="conactus"),
     path('review_my_order/<str:pk>/', views.review_my_order, name='review_my_order'),
     path('best_sales/', views.best_sales, name="best_sales"),
+    path('worker_view_feedback/',views.worker_view_feedback,name="worker_view_feedback")
 
 ]

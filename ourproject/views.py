@@ -400,3 +400,8 @@ def best_sales(request):
 				j[1]=j[1]+shift[1]
 
 	return render(request, 'ourproject/bestsales.html', {'bestsales':bestsales})
+
+def worker_view_feedback(request):
+    feedback = Feedback.objects.all()
+    fedb = {'feedback': feedback}
+    return render(request, 'ourproject/worker_view_feedback.html', fedb)
