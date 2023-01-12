@@ -117,7 +117,7 @@ def customer(request):
 
 def workers(request):
 	workers=Worker.objects.all()
-	wor={'workers':Worker}
+	wor={'workers':workers}
 	return render(request,'ourproject/workers.html',wor)
 def view_customer(request):
 	users_in_group = Group.objects.get(name='Customer').user_set.all()
