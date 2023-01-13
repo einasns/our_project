@@ -484,9 +484,9 @@ def add_to_cart(request,bar_code,username):
     product=Product.objects.get(bar_code=bar_code)
     c=cart(customer=user,product=product)
     c.save()
-    return redirect()
+    return redirect('my_cart')
 
 def my_cart(request):
     Cart = cart.objects.all()
-    Crt = {'feedback': Cart}
-    return render(request, 'ourproject/worker_view_feedback.html', Crt)
+    Crt = {'cart': Cart}
+    return render(request, 'ourproject/my_cart.html', Crt)
