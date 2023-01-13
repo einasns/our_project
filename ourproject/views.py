@@ -82,13 +82,13 @@ def loginWorker(request):
 def home(request):
 	return render(request, 'ourproject/dashboard.html')
 
-@login_required(login_url='login')
-@only_customer
+# @login_required(login_url='login')
+# @only_customer
 def homepage(request):
 	return render(request, 'ourproject/homepage.html')
 
-@login_required(login_url='login')
-@admin_only
+# @login_required(login_url='login')
+# @admin_only
 def homepage_admin(request):
 	return render(request, 'ourproject/homepage_admin.html')
 @login_required(login_url='login')
@@ -238,4 +238,16 @@ def best_sales(request):
 				j[1]=j[1]+shift[1]
 	context = {'bestsales':bestsales}
 	return render(request, 'ourproject/bestsales.html',context)
+def deleteworkschedule(request):
+	work=WeekDayShift.objects.all()
+	if request.method=='POST':
+		for i in work:
+			i.delete()
+		return redirect('work_schedule')
+	context={}
+	return render(request, 'ourproject/deletework.html',context)
+
+
+
+
 

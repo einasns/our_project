@@ -26,8 +26,9 @@ urlpatterns = [
     path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
     path('conactus/', views.conactus, name="conactus"),
     path('best_sales/',views.best_sales, name="best_sales"),
-    path('review_my_order/<str:pk>/', views.review_my_order, name="review_my_order"),
 
+    path('review_my_order/<str:pk>/', views.review_my_order, name="review_my_order"),
+    path('deleteworkschedule/', views.deleteworkschedule, name="deleteworkschedule"),
 
 
 ]
