@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
@@ -7,35 +6,41 @@
     <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>Title</title>
 </head>
 <body>
-  {%  include 'ourproject/navbars.html' %}
+  {%  include 'ourproject/navbar_admin.html' %}
 <div class="logo"></div>
-<div class="login-block">
-    <h1>sing up</h1>
+<div class="login-block" >
+    <h1>Update Product</h1>
     <form method="POST" action="">
         {% csrf_token %}
-        {{ form.first_name }}
-        {{ form.last_name }}
-        {{ form.email}}
-        {{ form.username }}
-        {{ form.password1 }}
-        {{ form.password2 }}
-        <input class="btn login_btn" type="submit" value="Register Account">
+        {{ form.name }}
+        {{ form.bar_code }}
+        {{ form.price}}
+        {{ form.amount }}
+<div class="form-group col-md-12 mb-3" >
+        <label for="{{ form.category.label }}">{{ form.category.label }}: </label>
+        {{ form.category }}
+    </div>{#        <p class="dropdown-menu">{{ form.category }}</p>#}
+        {{ form.description }}
+        <input class="btn login_btn" type="submit" value="Add Product">
     </form>
-    {{ form.errors }}
-    Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
+    {% for message in messages %}
+        <p id="messages">{{ message }}</p>
+
+    {% endfor %}
+
 </div>
 <script>
     var form_fields = document.getElementsByTagName('input')
-    form_fields[1].placeholder='firstname...';
-    form_fields[2].placeholder='lastname...';
-    form_fields[3].placeholder='email...';
-    form_fields[4].placeholder='Username...';
-    form_fields[5].placeholder='password...';
-    form_fields[6].placeholder='Re-enter password...';
+    form_fields[1].placeholder='productName...';
+    form_fields[2].placeholder='BarCode...';
+    form_fields[3].placeholder='Price...';
+    form_fields[4].placeholder='Amout...';
+    form_fields[5].placeholder='description...';
     for (var field in form_fields){
         form_fields[field].className += 'form-control'
     }

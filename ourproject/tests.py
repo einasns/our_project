@@ -4,6 +4,7 @@ from django.test import TestCase,tag
 from django.urls import reverse,resolve
 from django.test import Client
 from ourproject.views import logincustomer,loginAdmin,loginWorker,singup,products_worker,add_product_worker,update_product_worker,review_my_order,work_schedule,best_sales,homepage_admin,conactus
+from ourproject.views import logincustomer,loginAdmin,loginWorker,singup,products_worker,add_product_worker,update_product_worker,review_my_order,work_schedule,best_sales
 import unittest
 import requests
 import json
@@ -182,6 +183,30 @@ class add_product_workerTest(TestCase):
 #     def testupdate_product_workerAccessNameNegative(self):
 #         response = self.client.get(reverse('update_product_worker',{'bar_code': 45}))
 #         self.assertNotEqual(response.status_code, 300)
+class update_product_workerTest(TestCase):
+    def testupdate_product_workerUsedTemplate(self):
+        response =self.client.get(reverse('update_product_worker'),{'bar_code': '45'})
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/update_product_worker.html')
+    def testupdate_product_workerNotUsedTemplate(self):
+        response = self.client.get(reverse('update_product_worker'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/dashboard.html')
+    def testupdate_product_workerrAccessUrl(self):
+        response = self.client.get('/update_product_worker/',{'bar_code': '45'})
+        self.assertEqual(response.status_code, 200)
+    def testupdate_product_workerpaccessUrlNegetve(self):
+        response = self.client.get('/update_product_worker/',{'bar_code': '44'})
+        self.assertNotEqual(response.status_code, 300)
+    def testupdate_product_workerUrlIsResolved(self):
+        url = reverse('update_product_worker',{'bar_code': 45})
+        self.assertEquals(resolve(url).func,update_product_worker,{'bar_code': 45})
+    def testupdate_product_workerAccessName(self):
+        response = self.client.get(reverse('update_product_worker',{'bar_code': 45}))
+        self.assertEqual(response.status_code, 200)
+    def testupdate_product_workerAccessNameNegative(self):
+        response = self.client.get(reverse('update_product_worker',{'bar_code': 45}))
+        self.assertNotEqual(response.status_code, 300)
 # class customer_review_hisorderTest(TestCase):
 #     def testcustomer_review_hisorderUsedTemplate(self):
 #         response =self.client.get(reverse('review_my_order'))
@@ -207,6 +232,7 @@ class add_product_workerTest(TestCase):
 #         response = self.client.get(reverse('review_my_order'))
 #         self.assertNotEqual(response.status_code, 300)
 class work_scheduleTest(TestCase):
+# class work_scheduleTest(TestCase):
     def testwork_scheduleUsedTemplate(self):
         response =self.client.get(reverse('work_schedule'))
         self.assertEquals(response.status_code, 200)

@@ -9,13 +9,9 @@
     <div class="navbar-nav">
       <a class="nav-item nav-link " href="{% url 'customer_list' %}">Customers list<span class="sr-only">(current)</span></a>
       <a class="nav-item nav-link " href="{% url 'Admin_Reviewproduct_list' %}">Products list</a>
-      <a class="nav-item nav-link" href="#">Workers list</a>
-      <a class="nav-item nav-link " href="{% url 'view_order' %}">order list</a>
-{#      <a class="nav-item nav-link" href="#">Delete product</a>#}
-{#      <a class="nav-item nav-link" href="#">Add worker</a>#}
-{#      <a class="nav-item nav-link" href="#">Delete worker</a>#}
+      <a class="nav-item nav-link" href="{% url 'workers' %}">Workers list</a>
       <a class="nav-item nav-link" href="{% url 'work_schedule' %}">Work schedule</a>
-        <div style="margin-left: 500px">
+        <div style="margin-left: 400px">
             <li class="nav-item">
         <a class="nav-link" href="#">Welcome, {{user.username}}</a>
        </li>
