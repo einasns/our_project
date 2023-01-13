@@ -10,11 +10,9 @@
         <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
 
 </head>
-
-<body>
+<body ></body>
 	{%  include 'ourproject/navbar_admin.html' %}
-
-{% load static %}
+<br>
 
 <div class="row">
    <div class="col-md">
@@ -27,8 +25,9 @@
                <th>Product</th>
                 <th>Bar code</th>
                 <th>Amount</th>
-                <th>Price</th>
+                <th>Prie</th>
                <th>Category</th>
+                <th>description</th>
                 <th>update product</th>
                <th>Delete product</th>
 
@@ -41,7 +40,7 @@
                               <td>{{ i.price }}</td>
                               <td>{{ i.category }}</td>
                               <td>{{ i.description }}</td>
-                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'update_product_worker' i.bar_code %}">Update product</a></td>
+                             <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'update_product_admin' i.bar_code %}">Update product</a></td>
                              <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'delete_product_admin' i.bar_code %}">Delete product</a></td>
 
                           </tr>
