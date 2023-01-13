@@ -1,6 +1,5 @@
-from django.urls import path
 from . import views
-
+from django.urls import path,include
 
 urlpatterns = [
     path('', views.home,name="home"),
@@ -31,14 +30,12 @@ urlpatterns = [
     path('add_product_admin/', views.add_product_admin, name='add_product_admin'),
     path('update_product_worker/<str:pk>/', views.update_product_worker, name='update_product_worker'),
     path('singup/', views.singup,name="sigup"),
-    path('search_worker/', views.search_worker, name="search_worker"),
     path('workhours_schedule/', views.workhours_schedule, name="workhours_schedule"),
     path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
     path('delete_product_admin/<str:pk>/', views.delete_product_admin, name="delete_product_admin"),
     path('delete_product_worker/<str:pk>/', views.delete_product_worker, name="delete_product_worker"),
     path('conactus/', views.conactus, name="conactus"),
     path('work_schedule/', views.work_schedule, name="work_schedule"),
-    path('search_worker/', views.search_worker,name='search_worker'),
 
     path('review_my_order/<str:pk>/', views.review_my_order, name='review_my_order'),
     path('best_sales/', views.best_sales, name="best_sales"),

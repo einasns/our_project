@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
+from .models import Worker
 from itertools import count, repeat, chain
 from .forms import CreatUserForm, OrderForm, ProductForm, ProductFormUPdate, shiftsForm, FeedbackForm, CreatWorkrForm
 from .decorators import unauthenticated_user, allwed_users, admin_only, only_worker, only_customer
@@ -117,9 +118,20 @@ def homepage(request):
     return render(request, 'ourproject/homepage.html')
 
 
+
+
+
 @login_required(login_url='login')
 @admin_only
+
 def homepage_admin(request):
+    if 'q' in request.GET:
+        q = request.GET['q']
+        posts = Worker.objects.filter(name__contains=q)
+
+
+    else:
+        posts = Worker.objects.all()
     return render(request, 'ourproject/homepage_admin.html')
 
 
@@ -373,14 +385,7 @@ def workhours_schedule(request):
     return render(request, 'ourproject/worker_reviewworkhour.html', context)
 
 
-class search_worker(workers):
-  model=Product
-  template_name= 'homepage_admin.html'
-  context_object_name='posts'
 
-  def get_queryset(self):
-      query=self.request.GET.get('q')
-      return Worker.objects.filter(name=query).order_by('date_created')
 
 
 def add_worker(request):
