@@ -1,24 +1,19 @@
 
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'home' %}">Design</a>
+  <a class="navbar-brand" href="{% url 'homepage'%}">Design</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Review best sales<span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Review my orders</a>
-      <a class="nav-item nav-link" href="#">Review feed back</a>
-      <a class="nav-item nav-link" href="#">my cart</a>
-        <a class="nav-item nav-link" href="#">best sales</a>
-        <a class="nav-item nav-link" href="#">My orders</a>
-        <a class="nav-item nav-link" href="{% url 'conactus' %}">contact us</a>
-        <a class="nav-item nav-link" href="{% url 'reviewfeedbackcustomer'%}">review feedback</a>
 
+        <a class="nav-item nav-link" href="{% url 'best_sales' %}">best sales</a>
+        <a class="nav-item nav-link" href="{% url 'review_my_order' user.username %}">My Orders</a>
+        <a class="nav-item nav-link" href="{% url 'conactus' %}">contact us</a>
         <li class="nav-item">
         <a class="nav-link" href="#">Welcome, {{user.username}}</a>
-       </li></div>
+       </li>
         <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>
     </div>
   </div>

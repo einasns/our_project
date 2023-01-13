@@ -98,7 +98,7 @@ class Feedback(models.Model):
 	customer=models.CharField(null=True,max_length=100)
 	feedback=models.CharField(max_length=1200,null=True)
 class cart(models.Model):
-	customer=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+	customer=models.ForeignKey(User,null=True,on_delete=models.CASCADE)
 	product = models.ForeignKey(Product,null=True,on_delete=models.CASCADE)
 # class work_schedule(models.Model):
 class Shift(models.Model):
