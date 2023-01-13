@@ -25,8 +25,9 @@
                <th>Product</th>
                 <th>Bar code</th>
                 <th>Amount</th>
-                <th>Price</th>
+                <th>Prie</th>
                <th>Category</th>
+                <th>description</th>
                 <th>update product</th>
                <th>Delete product</th>
 
@@ -40,7 +41,7 @@
                               <td>{{ i.category }}</td>
                               <td>{{ i.description }}</td>
                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'update_product_admin' i.bar_code %}">Update product</a></td>
-{#                             <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'delete_product_admin' i.bar_code %}">Delete product</a></td>#}
+                             <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'delete_product_admin' i.bar_code %}">Delete product</a></td>
 
                           </tr>
                       {% endfor %}

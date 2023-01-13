@@ -70,6 +70,8 @@ def loginAdmin(request):
     context = {}
     return render(request, 'ourproject/log_in_admin.html', context)
 
+# @login_required(login_url='login')
+# @only_customer
 
 def loginWorker(request):
     if request.method == 'POST':
@@ -98,8 +100,8 @@ def homepage(request):
     return render(request, 'ourproject/homepage.html', {'products': products})
 
 
-@login_required(login_url='login')
-@admin_only
+# @login_required(login_url='login')
+# @admin_only
 def homepage_admin(request):
     return render(request, 'ourproject/homepage_admin.html')
 
@@ -152,6 +154,36 @@ def deleteworker(request, pk):
 
 
 def view_order(request):
+	order =Order.objects.all()
+	# customer =Customer.objects.all()
+	ord = {'order': order}
+	return render(request, 'ourproject/order_list.html', ord)
+def work_schedule(request):
+	shift_assignments = WeekDayShift.objects.order_by('shift__shift_name','day__day_name','worker_name').values_list('shift__shift_id','day__day_id','worker_name')
+	lis=WeekDay.objects.all().order_by('day_id').values_list('day_name')
+	shift_assignment_list = []
+	ll=['shifts/Days:']
+	for i in lis:
+		ll.append(i)
+	shift_assignment_list.append(ll)
+	# shift_assignment_list.append(lis)
+	shii1=['shift1']
+	shii2=['shift2']
+	shii3=['shift3']
+	shift_assignment_list.append(shii1)
+	shift_assignment_list.append(shii2)
+	shift_assignment_list.append(shii3)
+	for shift in shift_assignments:
+		index = [shift[2]]
+		if shift[0]==1:
+			shift_assignment_list[1].append(shift[2])
+		if shift[0]==2:
+			shift_assignment_list[2].append(shift[2])
+		if shift[0]==3:
+			shift_assignment_list[3].append(shift[2])
+	context={'shift_assignment_list':shift_assignment_list}
+	return render(request, 'ourproject/buildschedule_forAdmin.html', context)
+def review_my_order(request,pk):
     order = Order.objects.all()
     # customer =Customer.objects.all()
     ord = {'order': order}
@@ -318,8 +350,8 @@ def add_product_worker(request):
 	context = {'form':form}
 	return render(request, 'ourproject/add_product_worker.html',context)
 def update_product_worker(request,pk):
-	product=Product.objects.get(bar_code=pk)
-	form=ProductFormUPdate(instance=product)
+	product = Product.objects.get(bar_code=pk)
+	form = ProductFormUPdate(instance=product)
 	if request.method=='POST':
 		form = ProductFormUPdate(request.POST,instance=product)
 		if form.is_valid():
@@ -397,49 +429,55 @@ def add_worker2(request):
 
 
 def review_my_order(request,pk):
-	use=User.objects.get(username=pk)
-	order = Order.objects.filter(customer=use)
-	context = {'order':order}
+	user=User.objects.get(username=pk)
+	order = user.order_set.all()
+	context = {'order':order,'item':pk}
 	return render(request, 'ourproject/review_myorder_customrt.html', context)
 def best_sales(request):
-	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
 	bestsales=[]
 	allprdduct=Product.objects.all()
-
+	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
 	for i in allprdduct:
-		product_amont=[i,0]
+		product_amont=[i,0,i.bar_code,i.price,i.amount]
 		bestsales.append(product_amont)
 	for j in bestsales:
 		for shift in products:
 			if shift[0]==j[0].bar_code:
 				j[1]=j[1]+shift[1]
+	context = {'bestsales':bestsales}
+	return render(request, 'ourproject/bestsales.html',context)
+def deleteworkschedule(request):
+	work=WeekDayShift.objects.all()
+	if request.method=='POST':
+		for i in work:
+			i.delete()
+		return redirect('work_schedule')
+	context={}
+	return render(request, 'ourproject/deletework.html',context)
 
-	return render(request, 'ourproject/bestsales.html', {'bestsales':bestsales})
 
 def worker_view_feedback(request):
     feedback = Feedback.objects.all()
     fedb = {'feedback': feedback}
     return render(request, 'ourproject/worker_view_feedback.html', fedb)
 def review_my_order(request,pk):
-	use=User.objects.get(username=pk)
-	order = Order.objects.filter(customer=use)
-	context = {'order':order}
+	user=User.objects.get(username=pk)
+	order = Order.objects.filter(customer=user)
+	context = {'order':order,'item':pk}
 	return render(request, 'ourproject/review_myorder_customrt.html', context)
 def best_sales(request):
-	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
 	bestsales=[]
 	allprdduct=Product.objects.all()
-
+	products = Order.objects.order_by('product__bar_code','amount').values_list('product__bar_code','amount')
 	for i in allprdduct:
-		product_amont=[i,0]
+		product_amont=[i,0,i.bar_code,i.price,i.amount]
 		bestsales.append(product_amont)
 	for j in bestsales:
 		for shift in products:
 			if shift[0]==j[0].bar_code:
 				j[1]=j[1]+shift[1]
-
-	return render(request, 'ourproject/bestsales.html', {'bestsales':bestsales})
-
+	context = {'bestsales':bestsales}
+	return render(request, 'ourproject/bestsales.html',context)
 
 def add_to_cart(request,bar_code,username):
     user=User.objects.get(username= username)

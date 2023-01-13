@@ -32,10 +32,14 @@ urlpatterns = [
     path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
     path('conactus/', views.conactus, name="conactus"),
     path('best_sales/',views.best_sales, name="best_sales"),
+
+    path('review_my_order/<str:pk>/', views.review_my_order, name="review_my_order"),
+    path('deleteworkschedule/', views.deleteworkschedule, name="deleteworkschedule"),
+
     path('review_my_order/<str:pk>/', views.review_my_order, name="review_my_order"),
     path('worker_view_feedback/', views.worker_view_feedback, name="worker_view_feedback"),
-    path('delete_product_admin/', views.delete_product_admin, name="delete_product_admin"),
-    path('delete_product_worker/', views.delete_product_worker, name="delete_product_worker"),
+    path('delete_product_admin/<str:pk>/', views.delete_product_admin, name="delete_product_admin"),
+    path('delete_product_worker/<str:pk>', views.delete_product_worker, name="delete_product_worker"),
     path('add_to_cart/<str:bar_code>/<str:username>/', views.add_to_cart, name="add_to_cart"),
     path('my_cart/', views.my_cart, name="my_cart"),
 
