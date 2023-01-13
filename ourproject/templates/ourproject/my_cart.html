@@ -12,3 +12,29 @@
 <body ></body>
 	{%  include 'ourproject/navbar_customer.html' %}
 <br>
+<div class="row">
+   <div class="col-md">
+      <div class="card card-body">
+         <h5>my cart</h5>
+      </div>
+      <div class="card card-body">
+         <table class="table">
+            <tr>
+                <th>my product</th>
+                <th>delete from cart</th>
+                <th> order product</th>
+
+            </tr>
+            {% for i in cart %}
+                          <tr>
+                              <td>{{i.product}}</td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> - </a></td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> order it </a></td>
+
+                          </tr>
+                      {% endfor %}
+         </table>
+      </div>
+   </div>
+
+</div>
