@@ -76,32 +76,35 @@
          {% for shift in shift_assignment_list %}
              <tr>
                  {% for i in shift %}
+                    {% if not i %}
+                    <td><th>--------</th></td>
+             {% endif %}
                      <td><th>{{i}}</th></td>
                  {% endfor %}
 
              </td>
                   {% endfor %}
          </tr>
-{#         <tr>#}
-{#         <td>shifts/Days:</td>#}
-{#         {% for i in weekday %}#}
-{#             <td>#}
-{#             <th>{{i.day_name}}</th>#}
-{#             </td>#}
-{#                  {% endfor %}#}
-{#         </tr>#}
-{#         <td>#}
-{#         {% for i in shift %}#}
-{#             <tr><th>{{ i.shift_name }}</th>#}
-{#             </tr>#}
-{#                  {% endfor %}#}
-{#         </td>#}
-{#         <td>#}
-{#         {% for i in workersname %}#}
-{#             <tr><th>{{ i }}</th>#}
-{#             </tr>#}
-{#                  {% endfor %}#}
-{#         </td>#}
+<!--{#         <tr>#}-->
+<!--{#         <td>shifts/Days:</td>#}-->
+<!--{#         {% for i in weekday %}#}-->
+<!--{#             <td>#}-->
+<!--{#             <th>{{i.day_name}}</th>#}-->
+<!--{#             </td>#}-->
+<!--{#                  {% endfor %}#}-->
+<!--{#         </tr>#}-->
+<!--{#         <td>#}-->
+<!--{#         {% for i in shift %}#}-->
+<!--{#             <tr><th>{{ i.shift_name }}</th>#}-->
+<!--{#             </tr>#}-->
+<!--{#                  {% endfor %}#}-->
+<!--{#         </td>#}-->
+<!--{#         <td>#}-->
+<!--{#         {% for i in workersname %}#}-->
+<!--{#             <tr><th>{{ i }}</th>#}-->
+<!--{#             </tr>#}-->
+<!--{#                  {% endfor %}#}-->
+<!--{#         </td>#}-->
 
          </table>
 

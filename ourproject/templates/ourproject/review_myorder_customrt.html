@@ -1,6 +1,5 @@
 {% load static %}
 
-<!DOCTYPE html>
 <html>
 <head>
 	<title>CRM</title>
@@ -10,14 +9,14 @@
         <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
 
 </head>
-<body ></body>
+<body>
 	{%  include 'ourproject/navbar_customer.html' %}
 <br>
 
 <div class="row">
    <div class="col-md">
       <div class="card card-body">
-         <h5>My Orders</h5>
+         <h5>My Orders {{item}}</h5>
       </div>
       <div class="card card-body">
          <table class="table">
