@@ -28,6 +28,9 @@
                 <th>worker_id</th>
                 <th>password</th>
                <th>bank_acccount</th>
+                <th>delete worker</th>
+
+
             </tr>
             {% for i in workers %}
                           <tr>
@@ -39,6 +42,7 @@
                               <td>{{ i.worker_id }}</td>
                               <td>{{ i.password }}</td>
                               <td>{{ i.bank_acccount }}</td>
+                              <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> Delete worker</a></td>
                           </tr>
                       {% endfor %}
          </table>

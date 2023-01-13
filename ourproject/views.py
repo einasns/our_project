@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .models import *
 from itertools import count, repeat,chain
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm
+from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm,WorkerForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -133,7 +133,7 @@ def view_order(request):
 	order =Order.objects.all()
 	# customer =Customer.objects.all()
 	ord = {'order': order}
-	return render(request, 'ourproject/order_list.html', ord)
+	return render(request, 'ourproject/order_list.html',ord)
 def work_schedule(request):
 	shift_assignments = WeekDayShift.objects.order_by('shift__shift_name','day__day_name').values_list('shift__shift_id','day__day_id','worker_name')
 	lis=WeekDay.objects.all().order_by('day_id').values_list('day_name')
@@ -262,7 +262,29 @@ def reviewfeedback(request):
 	context={'feedback':feedback}
 	return render(request, 'ourproject/review_feedback_customer.html',context)
 
+##@login_required(login_url='login')
+##@allwed_users(allowed_roles=['worker'])
 def editprofile(request):
-	feedback = Feedback.objects.all()
-	context = {'feedback': feedback}
-	return render(request, 'ourproject/worker_edit_profile.html.html', context)
+	User = request.user
+	form = WorkerForm(instance=User)
+	context = {'form': form }
+	return render(request,'ourproject/worker_edit_profile.html', context)
+def accountsetting(request):
+	Worker = request.user.worker
+	form = WorkerForm(instance=Worker)
+	context = {'form': form}
+	return render(request, 'ourproject/worker_edit_profile.html', context)
+
+def admindeleteworker(request, pk):
+	Worker =WorkerForm.objects.get(bar_code=pk)
+	if request.method == 'POST':
+		Worker.delete()
+		return redirect('admin_delete_worker')
+	context = {'item': Worker}
+	return render(request, 'ourproject/admin_delete_worker.html',context)
+def createorder(request):
+	form=OrderForm()
+	context= {'form':form}
+	return render(request,'ourproject/customer_open_order.html',context)
+
+

@@ -33,5 +33,8 @@ urlpatterns = [
     path('delete_product_worker/<str:pk>/', views.delete_product_worker, name="delete_product_worker"),
     path('conactus/', views.conactus, name="conactus"),
     path('reviewfeedbackcustomer/', views.reviewfeedback, name="reviewfeedbackcustomer"),
+    path('editprofile', views.editprofile,name="editprofile"),
+    path('admindeleteworker/<str:pk>/', views.admindeleteworker, name="admin_delete_worker"),
+    path('create_order/',views.createorder,name="create_order")
 
 ]

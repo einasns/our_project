@@ -10,11 +10,12 @@
 </head>
 <body ></body>
 
-	{%  include 'ourproject/navbar_worker.html' %}
+	{%  include 'ourproject/navbar_customer.html' %}
 
 <div class="row">
    <div class="col-md">
       <div class="card card-body">
+          <a class="btn btn-primary  btn-sm-block"href="{% url 'create_order' %}">create order</a>
          <h5>orders</h5>
       </div>
       <div class="card card-body">
@@ -24,7 +25,7 @@
                 <th>price</th>
                 <th> amount </th>
                 <th>customer</th>
-                <th>product</th>
+                <th>products</th>
             </tr>
             {% for i in order %}
                           <tr>
@@ -42,3 +43,5 @@
    </div>
 
 </div>
+
+
