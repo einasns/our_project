@@ -5,17 +5,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 # we don't need this any more
 
-class Customer(models.Model):
-    name = models.CharField(max_length=200, null=True)
-    phone = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
-    address = models.CharField(max_length=200, null=True)
-    customer_id = models.CharField(max_length=9, null=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    password = models.CharField(max_length=15, null=True)
-
-    def __str__(self):
-        return self.name
 
 
 # we don't need this any more
@@ -71,27 +60,10 @@ class Order(models.Model):
     amount = models.IntegerField(default=0)
     name_of_product = models.CharField(max_length=200, null=True)
     customer_name = models.CharField(max_length=200, null=True)
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.SET_NULL)
+    customer = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
-
-class Feedback(models.Model):
-    customer = models.ForeignKey(Customer, null=True, on_delete=models.CASCADE)
-    feedback = models.CharField(max_length=1200, null=True)
-
-
-class cart(models.Model):
-    customer = models.OneToOneField(Customer, null=True, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
-    order_number=models.IntegerField(default=0)
-    price=models.IntegerField(default=0)
-    amount=models.IntegerField(default=0)
-    name_of_product=models.CharField(max_length=200,null=True)
-    customer_name=models.CharField(max_length=200,null=True)
-    customer =models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product,null=True,on_delete=models.SET_NULL)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class Feedback(models.Model):
