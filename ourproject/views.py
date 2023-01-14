@@ -87,7 +87,8 @@ def home(request):
 @login_required(login_url='loginAdmin')
 @only_customer
 def homepage(request):
-	return render(request, 'ourproject/homepage.html')
+    products = Product.objects.all()
+    return render(request, 'ourproject/homepage.html', {'products': products})
 
 @login_required(login_url='login')
 @admin_only

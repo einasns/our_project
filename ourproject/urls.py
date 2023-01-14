@@ -27,7 +27,7 @@ urlpatterns = [
     path('add_product_worker/', views.add_product_worker, name='add_product_worker'),
     path('add_product_admin/', views.add_product_admin, name='add_product_admin'),
     path('update_product_worker/<str:pk>/', views.update_product_worker, name='update_product_worker'),
-
+    path('update_product_admin/<str:pk>/', views.update_product_admin, name='update_product_admin'),
     path('singup/', views.singup,name="sigup"),
     path('work_schedule/', views.work_schedule, name="work_schedule"),
     path('addtoworkschedule/', views.addtoworkschedule, name="addtoworkschedule"),
@@ -45,7 +45,7 @@ urlpatterns = [
     path('delete_product_worker/<str:pk>', views.delete_product_worker, name="delete_product_worker"),
     path('add_to_cart/<str:bar_code>/<str:username>/', views.add_to_cart, name="add_to_cart"),
     path('my_cart/', views.my_cart, name="my_cart"),
-    path('reviewfeedbackcustomer/', views.reviewfeedback, name="reviewfeedbackcustomer"),
+    # path('reviewfeedbackcustomer/', views.reviewfeedback, name="reviewfeedbackcustomer"),
     path('editprofile', views.editprofile,name="editprofile"),
     path('admindeleteworker/<str:pk>/', views.admindeleteworker, name="admin_delete_worker"),
     path('create_order/',views.createorder,name="create_order")
