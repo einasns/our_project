@@ -7,6 +7,8 @@ from django.urls import reverse,resolve
 from django.test import Client
 from ourproject.views import homepage_admin, conactus, add_product_admin, logoutcustomer
 from ourproject.views import logincustomer,loginAdmin,loginWorker,singup,products_worker,add_product_worker,update_product_worker,review_my_order,work_schedule,best_sales,customer,Admin_Reviewproduct_list,view_order
+from ourproject.views import logincustomer,loginAdmin,loginWorker,singup,products_worker,add_product_worker,update_product_worker,review_my_order,work_schedule,best_sales,homepage_admin,conactus
+from ourproject.views import logincustomer,loginAdmin,loginWorker,singup,products_worker,add_product_worker,update_product_worker,review_my_order,work_schedule,best_sales,login,logoutcustomer,logoutadmin,logoutworker
 import unittest
 import requests
 import json
@@ -190,6 +192,7 @@ class add_product_workerTest(TestCase):
 #         response = self.client.get(reverse('review_my_order'))
 #         self.assertNotEqual(response.status_code, 300)
 class work_scheduleTest(TestCase):
+# class work_scheduleTest(TestCase):
     def testwork_scheduleUsedTemplate(self):
         response =self.client.get(reverse('work_schedule'))
         self.assertEquals(response.status_code, 200)
@@ -307,6 +310,166 @@ class UpdateProductWorkerTest(TestCase):
 #         response = conactus(request)
 #         self.assertEqual(response.status_code, 200)
 #         self.assertEqual(FeedbackForm.objects.count(), 0)
+class homepage_workerTest(TestCase):
+    def testhomepage_workerUsedTemplate(self):
+        response =self.client.get(reverse('homepage_worker'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/homepage_worker.html')
+    def testhomepage_workerNotUsedTemplate(self):
+        response = self.client.get(reverse('homepage_worker'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/dashboard.html')
+    def testhomepage_workerAccessUrl(self):
+        response = self.client.get('/hompageworker/')
+        self.assertEqual(response.status_code, 200)
+    def testhomepage_workerpaccessUrlNegetve(self):
+        response = self.client.get('/homepageworker/')
+        self.assertNotEqual(response.status_code, 300)
+    def testhomepage_workerUrlIsResolved(self):
+        url = reverse('homepage_worker')
+        self.assertEquals(resolve(url).func,homepage_admin)
+    def testhomepage_workerAccessName(self):
+        response = self.client.get(reverse('homepage_worker'))
+        self.assertEqual(response.status_code, 200)
+    def testhomepage_workerAccessNameNegative(self):
+        response = self.client.get(reverse('homepage_worker'))
+        self.assertNotEqual(response.status_code, 300)
+
+
+class review_admin_workersTest(TestCase):
+    def testreview_admin_workersUsedTemplate(self):
+        response =self.client.get(reverse('workers'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/workers.html')
+    def testreview_admin_workersNotUsedTemplate(self):
+        response = self.client.get(reverse('workers'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/homepage_admin.html')
+    def testreview_admin_workersAccessUrl(self):
+        response = self.client.get('/workers/')
+        self.assertEqual(response.status_code, 200)
+    def testreview_admin_workerspaccessUrlNegetve(self):
+        response = self.client.get('/workers/')
+        self.assertNotEqual(response.status_code, 300)
+    def testreview_admin_workersUrlIsResolved(self):
+        url = reverse('workers')
+        self.assertEquals(resolve(url).func,products_worker)
+    def testreview_admin_workersAccessName(self):
+        response = self.client.get(reverse('workers'))
+        self.assertEqual(response.status_code, 200)
+    def testreview_admin_workersAccessNameNegative(self):
+        response = self.client.get(reverse('workers'))
+        self.assertNotEqual(response.status_code, 300)
+
+
+class add_worker_adminTest(TestCase):
+    def testadd_worker_adminUsedTemplate(self):
+        response =self.client.get(reverse('add_worker'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/add_worker.html')
+    def testadd_worker_adminNotUsedTemplate(self):
+        response = self.client.get(reverse('add_worker'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/workers.html')
+    def testadd_worker_adminAccessUrl(self):
+        response = self.client.get('/add_worker/')
+        self.assertEqual(response.status_code, 200)
+    def testadd_worker_adminpaccessUrlNegetve(self):
+        response = self.client.get('/add_worker/')
+        self.assertNotEqual(response.status_code, 300)
+    def testadd_worker_adminUrlIsResolved(self):
+        url = reverse('add_worker')
+        self.assertEquals(resolve(url).func,add_product_worker)
+    def testadd_worker_adminAccessName(self):
+        response = self.client.get(reverse('add_worker'))
+        self.assertEqual(response.status_code, 200)
+    def testadd_worker_adminAccessNameNegative(self):
+        response = self.client.get(reverse('add_worker'))
+        self.assertNotEqual(response.status_code, 300)
+
+
+class add_worker2_adminTest(TestCase):
+    def testadd_worker2_adminUsedTemplate(self):
+        response =self.client.get(reverse('add_worker2'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/add_worker.html')
+    def testadd_worker2_adminNotUsedTemplate(self):
+        response = self.client.get(reverse('add_worker2'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/workers.html')
+    def testadd_worker2_adminAccessUrl(self):
+        response = self.client.get('/add_worker2/')
+        self.assertEqual(response.status_code, 200)
+    def testadd_worker2_adminpaccessUrlNegetve(self):
+        response = self.client.get('/add_worker2/')
+        self.assertNotEqual(response.status_code, 300)
+    def testadd_worker2_adminUrlIsResolved(self):
+        url = reverse('add_worker2')
+        self.assertEquals(resolve(url).func,add_product_worker)
+    def testadd_worker2_adminAccessName(self):
+        response = self.client.get(reverse('add_worker2'))
+        self.assertEqual(response.status_code, 200)
+    def testadd_worker2_adminAccessNameNegative(self):
+        response = self.client.get(reverse('add_worker2'))
+        self.assertNotEqual(response.status_code, 300)
+
+class review_worker_feedbackTest(TestCase):
+    def testreview_worker_feedbackUsedTemplate(self):
+        response =self.client.get(reverse('worker_view_feedback'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response,'ourproject/worker_view_feedback.html')
+    def testreview_worker_feedbackNotUsedTemplate(self):
+        response = self.client.get(reverse('worker_view_feedback'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateNotUsed(response, 'ourproject/homepage_worker.html')
+    def testreview_worker_feedbackAccessUrl(self):
+        response = self.client.get('/worker_view_feedback/')
+        self.assertEqual(response.status_code, 200)
+    def testreview_worker_feedbackpaccessUrlNegetve(self):
+        response = self.client.get('/worker_view_feedback/')
+        self.assertNotEqual(response.status_code, 300)
+    def testreview_worker_feedbackUrlIsResolved(self):
+        url = reverse('worker_view_feedback')
+        self.assertEquals(resolve(url).func,products_worker)
+    def testreview_worker_feedbackAccessName(self):
+        response = self.client.get(reverse('worker_view_feedback'))
+        self.assertEqual(response.status_code, 200)
+    def testreview_worker_feedbackAccessNameNegative(self):
+        response = self.client.get(reverse('worker_view_feedback'))
+        self.assertNotEqual(response.status_code, 300)
+
+class LogoutWorkerTest(unittest.TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+    def test_logout_worker(self):
+        # Create a request and log in a user
+        request = self.factory.get(reverse('login'))
+        request.user = User.objects.create_user(username='testuser', password='testpassword',first_name='fff',last_name='ffff',email='ffff@gmail.com')
+        request.new_group = Group.objects.get_or_create(name='Worker')
+        request.user.groups.add(Group.objects.get(name='Worker'))
+        request.user.save()
+        login(request, request.user)
+        response = logoutworker(request)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/login/')
+        self.assertFalse(request.user.is_authenticated)
+
+
+class LogoutAdminTest(unittest.TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+    def test_logout_admi (self):
+        # Create a request and log in a user
+        request = self.factory.get(reverse('login'))
+        request.user = User.objects.create_user(username='testuser', password='testpassword',first_name='fff',last_name='ffff',email='ffff@gmail.com')
+        request.new_group = Group.objects.get_or_create(name='Admin')
+        request.user.groups.add(Group.objects.get(name='Admin'))
+        request.user.save()
+        login(request, request.user)
+        response = logoutadmin(request)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.url, '/login/')
+        self.assertFalse(request.user.is_authenticated)
 # class customer_listTest(TestCase):
 #     def testcustomer_listUsedTemplate(self):
 #        response =self.client.get(reverse('customer_list'))

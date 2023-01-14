@@ -498,7 +498,6 @@ def my_cart(request):
     Cart = cart.objects.all()
     Crt = {'Cart': Cart}
     return render(request, 'ourproject/my_cart.html', Crt)
-def delelecart(request, pk):
 
     car=cart.objects.get(product__bar_code=pk)
     if request.method == 'POST':
@@ -506,3 +505,35 @@ def delelecart(request, pk):
         return redirect('my_cart')
     context = {'item': car}
     return render(request, 'ourproject/deletecart.html', context)
+def workschedule_worker(request):
+    shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
+        'shift__shift_id', 'day__day_id', 'worker_name')
+    lis = WeekDay.objects.all().order_by('day_id').values_list('day_name')
+    shift_assignment_list = []
+    ll = ['shifts/Days:']
+    for i in lis:
+        ll.append(i)
+    shift_assignment_list.append(ll)
+    # shift_assignment_list.append(lis)
+    shii1 = ['shift1']
+    shii2 = ['shift2']
+    shii3 = ['shift3']
+    shift_assignment_list.append(shii1)
+    shift_assignment_list.append(shii2)
+    shift_assignment_list.append(shii3)
+    for shift in shift_assignments:
+        index = [shift[2]]
+        if shift[0] == 1:
+            shift_assignment_list[1].append(shift[2])
+        if shift[0] == 2:
+            shift_assignment_list[2].append(shift[2])
+        if shift[0] == 3:
+            shift_assignment_list[3].append(shift[2])
+
+    context = {'shift_assignment_list': shift_assignment_list}
+    return render(request, 'ourproject/work _schedule_forworker.html', context)
+
+def customer_view_feedback(request):
+    feedback = Feedback.objects.all()
+    fedb = {'feedback': feedback}
+    return render(request, 'ourproject/review_feedback_customer.html', fedb)
