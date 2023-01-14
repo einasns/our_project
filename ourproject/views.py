@@ -416,22 +416,6 @@ def add_worker2(request):
     context = {'form': form}
     return render(request, 'ourproject/add_worker2.html', context)
 
-# def add_to_cart(request, book_id):
-#     if request.user.is_authenticated():
-#         try:
-#             product = Product.objects.get(pk=book_id)
-#         except ObjectDoesNotExist:
-#             pass
-#         else:
-#             try:
-#                 cart = cart.objects.get(user=request.user, active=True)
-#             except ObjectDoesNotExist:
-#                 cart = Cart.objects.create(user=request.user)
-#                 cart.save()
-#                 cart.add_to_cart(book_id)
-#                 return redirect('cart')
-#             else:
-#                 return redirect('index')
 
 
 def review_my_order(request,pk):
@@ -536,3 +520,17 @@ def customer_view_feedback(request):
     feedback = Feedback.objects.all()
     fedb = {'feedback': feedback}
     return render(request, 'ourproject/review_feedback_customer.html', fedb)
+
+def order_product(request,bar_code,username):
+    product=Product.objects.get(bar_code=bar_code)
+    user = User.objects.get(username=username)
+    form = OrderForm()
+    if request.method=='POST':
+        price = int(product.price) * int(request.POST.get('amount'))
+        form = OrderForm(request.POST,price,product,user)
+        c = Order(amount=request.POST.get('amount'),order_number=request.POST.get('order_number'),price=price,product=product,customer=user)
+        c.save()
+        return redirect('review_my_order',username)
+    context = {'form':form}
+
+    return render(request, 'ourproject/orderProduct.html',context)
