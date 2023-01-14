@@ -10,7 +10,7 @@
 
 </head>
 <body >
-	{%  include 'ourproject/navbar_admin.html' %}
+	{%  include 'ourproject/navbar_worker.html' %}
 
 <br>
 <div class="row">
@@ -37,13 +37,6 @@
                   {% endfor %}
          </tr>
          </table>
-
-                   <a class="btn btn-outline-info"style="width: 200px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'addtoworkschedule'%}">Update add to schedule</a>
-          <br>
-          <p>New week schedule:</p>
-            <a class="btn btn-outline-info"style="width: 200px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'deleteworkschedule'%}">Delete schedule</a>
-
-      </div>
+           </div>
    </div>
 </div>
-</body>
