@@ -150,8 +150,13 @@ def view_customer(request):
 
 
 def deleteworker(request, pk):
-    context = {}
-    return render(request, 'ourproject/delete.html', context)
+
+    worker = Worker.objects.get(user__username=pk)
+    if request.method == 'POST':
+        worker.delete()
+        return redirect('workers')
+    context = {'item': worker}
+    return render(request, 'ourproject/deleteworker.html', context)
 
 
 def view_order(request):
@@ -445,7 +450,6 @@ def worker_view_feedback(request):
     feedback = Feedback.objects.all()
     fedb = {'feedback': feedback}
     return render(request, 'ourproject/worker_view_feedback.html', fedb)
-
 def review_my_order(request,pk):
 	user=User.objects.get(username=pk)
 	order = Order.objects.filter(customer=user)
@@ -469,7 +473,9 @@ def add_to_cart(request,bar_code,username):
     user=User.objects.get(username= username)
     product=Product.objects.get(bar_code=bar_code)
     c=cart(customer=user,product=product)
-    c.save()
+    isthereitem=cart.objects.filter(customer=user).filter(product=product)
+    if not isthereitem:
+        c.save()
     return redirect('my_cart')
 
 def my_cart(request):
@@ -477,6 +483,12 @@ def my_cart(request):
     Crt = {'Cart': Cart}
     return render(request, 'ourproject/my_cart.html', Crt)
 
+    car=cart.objects.get(product__bar_code=pk)
+    if request.method == 'POST':
+        car.delete()
+        return redirect('my_cart')
+    context = {'item': car}
+    return render(request, 'ourproject/deletecart.html', context)
 def workschedule_worker(request):
     shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
         'shift__shift_id', 'day__day_id', 'worker_name')

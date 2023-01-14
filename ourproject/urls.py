@@ -35,6 +35,8 @@ urlpatterns = [
     path('worker_view_feedback/', views.worker_view_feedback, name="worker_view_feedback"),
     path('delete_product_admin/<str:pk>/', views.delete_product_admin, name="delete_product_admin"),
     path('delete_product_worker/<str:pk>', views.delete_product_worker, name="delete_product_worker"),
+    path('deletecart/<str:pk>/', views.delelecart, name="deletecart"),
+
     path('add_to_cart/<str:bar_code>/<str:username>/', views.add_to_cart, name="add_to_cart"),
     path('my_cart/', views.my_cart, name="my_cart"),
     path('work_schedule_worker/', views.workschedule_worker, name="work_schedule_worker"),
