@@ -6,7 +6,7 @@ from .models import *
 class OrderForm(ModelForm):
     class Meta:
         model=Order
-        fields='__all__'
+        fields=['order_number','amount','price','product','customer']
 class ProductForm(ModelForm):
     class Meta:
         model=Product
@@ -32,3 +32,4 @@ class FeedbackForm(ModelForm):
     class Meta:
         model=Feedback
         fields=['customer','feedback']
+

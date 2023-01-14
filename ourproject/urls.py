@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from ourproject import views
 
 
 urlpatterns = [
@@ -39,5 +39,6 @@ urlpatterns = [
     path('my_cart/', views.my_cart, name="my_cart"),
     path('work_schedule_worker/', views.workschedule_worker, name="work_schedule_worker"),
     path('customer_view_feedback/', views.customer_view_feedback, name="customer_view_feedback"),
+    path('order_product/<str:bar_code>/<str:username>/', views.order_product, name="order_product"),
 
 ]
