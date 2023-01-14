@@ -11,35 +11,6 @@
 <body id="bg" style="background-image: url('{% static "images/a.jpeg" %}');"></body>
 {%  include 'ourproject/navbar_admin.html' %}
 
- <!-- Search Start -->
-        <div class="jumbotron border shadow">
-            <div class="row">
-                <div class="col-md-8 offset-2">
-                    <form>
-                        <div class="input-group">
-                            <input name="q" type="text" placeholder="Search Worker" class="form-control form-control-lg" />
-                            <div class="input-group-append">
-                                <button class="btn btn-dark btn-lg">Search </button>
-                                {% for i in workers %}
-                          <tr>
-                              <td>{{i.user}}</td>
-                              <td>{{ i.name }}</td>
-                              <td>{{ i.address }}</td>
-                              <td>{{ i.phone}}</td>
-                              <td>{{ i.worker_id }}</td>
-                              <td>{{ i.bank_acccount }}</td>
-
-                          </tr>
-                          {% endfor %}
-
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <!-- End Search -->
-
 
 
 </body>

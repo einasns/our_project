@@ -1,7 +1,7 @@
 
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'home' %}">Design</a>
+  <a class="navbar-brand" href="#">Design</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,7 +17,6 @@
       <a class="nav-item nav-link" href="#">add products</a>
       <a class="nav-item nav-link" href="#">Update products</a>
       <a class="nav-item nav-link" href="#">View feedback</a>
-      <a class="nav-item nav-link" href="#">Search product</a>
         {% if user.is_authenticated %}
 
       <li class="nav-item">

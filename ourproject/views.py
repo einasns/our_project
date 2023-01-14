@@ -125,13 +125,7 @@ def homepage(request):
 @admin_only
 
 def homepage_admin(request):
-    if 'q' in request.GET:
-        q = request.GET['q']
-        posts = Worker.objects.filter(name__contains=q)
 
-
-    else:
-        posts = Worker.objects.all()
     return render(request, 'ourproject/homepage_admin.html')
 
 
@@ -148,7 +142,6 @@ def homepage_customer(request):
 
 def products_worker(request):
     products = Product.objects.all()
-
     return render(request, 'ourproject/product_for_worker.html', {'products': products})
 
 
@@ -457,3 +450,13 @@ def best_sales(request):
                 j[1] = j[1] + shift[1]
 
     return render(request, 'ourproject/bestsales.html', {'bestsales': bestsales})
+
+def search_product(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            products = Product.objects.filter(price__icontains=query)
+            return render(request, 'Product_search.html', {'products':products})
+        else:
+            print("No information to show")
+            return render(request, 'Product_search.html', {})

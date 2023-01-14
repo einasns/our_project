@@ -1,0 +1,32 @@
+{% extends 'homepage_worker.html' %}
+{% extends 'product_for_worker.html' %}
+
+
+{% block content %}
+
+    <h5 class="text center" style="margin-left: 20px;"> Search Results:  </h5>
+
+        <hr>
+
+        <div class="container">
+
+            <div class="row justify-content-center m-4">
+
+                {% if products %}
+    
+                    {% for product in products %}
+        
+
+        
+                    {% endfor %}
+        
+                {% else %}
+                     <p>No Products available </p>
+                {% endif %}
+    
+            </div>
+
+        </div>
+
+
+{% endblock %}
