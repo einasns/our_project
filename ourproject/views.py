@@ -482,7 +482,7 @@ def my_cart(request):
     Cart = cart.objects.all()
     Crt = {'Cart': Cart}
     return render(request, 'ourproject/my_cart.html', Crt)
-
+def delelecart(request,pk):
     car=cart.objects.get(product__bar_code=pk)
     if request.method == 'POST':
         car.delete()
@@ -513,7 +513,6 @@ def workschedule_worker(request):
             shift_assignment_list[2].append(shift[2])
         if shift[0] == 3:
             shift_assignment_list[3].append(shift[2])
-
     context = {'shift_assignment_list': shift_assignment_list}
     return render(request, 'ourproject/work _schedule_forworker.html', context)
 
