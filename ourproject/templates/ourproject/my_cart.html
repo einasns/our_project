@@ -9,25 +9,28 @@
 	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static '/css/login_admin.css' %}">
     </head>
-<body >
+<body ></body>
 	{%  include 'ourproject/navbar_customer.html' %}
+<br>
 <div class="row">
    <div class="col-md">
       <div class="card card-body">
-         <h5>orders</h5>
+         <h5>my cart</h5>
       </div>
       <div class="card card-body">
          <table class="table">
             <tr>
-                <th> product </th>
-                <th>delete</th>
-                <th>order</th>
+                <th>my product</th>
+                <th>delete from cart</th>
+                <th> order product</th>
+
             </tr>
-            {% for i in Cart %}
+            {% for i in cart %}
                           <tr>
                               <td>{{i.product}}</td>
-                             <td><a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">-</a></td>
-                             <td> <a class="btn btn-outline-info "style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#">order</a></td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> - </a></td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> order it </a></td>
+
                           </tr>
                       {% endfor %}
          </table>
@@ -35,5 +38,3 @@
    </div>
 
 </div>
-</body>
-</html>
