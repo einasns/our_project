@@ -1,7 +1,7 @@
 
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'home' %}">Design</a>
+  <a class="navbar-brand" href="{% url 'homepage'%}">Design</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,12 +10,14 @@
 
         <a class="nav-item nav-link" href="{% url 'best_sales' %}">best sales</a>
         <a class="nav-item nav-link" href="{% url 'review_my_order' user.username %}">My Orders</a>
-        <a class="nav-item nav-link" href="{% url 'conactus' %}">contact us</a>
-        <a class="nav-item nav-link" href="{% url 'my_cart' %}"> my cart</a>
-
+        <a class="nav-item nav-link" href="{% url 'my_cart' %}">my cart</a>
+         <a class="nav-item nav-link" href="{% url 'conactus' %}">contact us</a>
+         <a class="nav-item nav-link" href="{% url 'customer_view_feedback' %}"> feedbacks</a>
+<div style="margin-left: 700px">
         <li class="nav-item">
         <a class="nav-link" href="#">Welcome, {{user.username}}</a>
-       </li></div>
+       </li>
+</div>
         <a class="nav-item nav-link" href="{% url 'logout' %}">logout</a>
     </div>
   </div>

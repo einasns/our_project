@@ -9,7 +9,6 @@ from django.contrib.auth.models import Group
 from .models import *
 from itertools import count, repeat,chain
 from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm,CreatWorkrForm
-from .forms import CreatUserForm,OrderForm,ProductForm,ProductFormUPdate,shiftsForm,FeedbackForm,WorkerForm
 from .decorators import unauthenticated_user,allwed_users,admin_only,only_worker,only_customer
 # Create your views here.
 @unauthenticated_user
@@ -29,75 +28,89 @@ def singup(request):
 
 
 def logincustomer(request):
-	if request.method=='POST':
-		username=request.POST.get('username')
-		password=request.POST.get('password')
-		user=authenticate(request,username=username,password=password)
-		if user is not None:
-			users_in_group = Group.objects.get(name='Customer').user_set.all()
-			if user in users_in_group:
-				login(request,user)
-				return redirect('homepage')
-			else:
-				messages.info(request, 'username OR password incorrert')
-		else:
-			messages.info(request,'username OR password incorrert')
-	context={}
-	return render(request, 'ourproject/login_customer.html',context)
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_group = Group.objects.get(name='Customer').user_set.all()
+            if user in users_in_group:
+                login(request, user)
+                return redirect('homepage')
+            else:
+                messages.info(request, 'username OR password incorrert')
+        else:
+            messages.info(request, 'username OR password incorrert')
+    context = {}
+    return render(request, 'ourproject/login_customer.html', context)
 def logoutcustomer(request):
+    logout(request)
+    return redirect('login')
+def logoutadmin(request):
 	logout(request)
-	return redirect('login')
-# this functions do the work of the log in
+	return redirect('loginAdmin')
+def logoutworker(request):
+	logout(request)
+	return redirect('logoutworker')
 @unauthenticated_user
 def loginAdmin(request):
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			users_in_groub = Group.objects.get(name='Admin').user_set.all()
-			if user in users_in_groub:
-				login(request, user)
-				return redirect('homepage_admin')
-			else:
-				messages.info(request, 'Username OR Password incorrert')
-		else:
-			messages.info(request, 'username OR Password incorrert')
-	context = {}
-	return render(request, 'ourproject/log_in_admin.html', context)
-def loginWorker(request):
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			users_in_groub = Group.objects.get(name='Worker').user_set.all()
-			if user in users_in_groub:
-				login(request, user)
-				return redirect('homepage_worker')
-			else:
-				messages.info(request, 'Username OR Password incorrert')
-		else:
-			messages.info(request, 'username OR Password incorrert')
-	context = {}
-	return render(request, 'ourproject/log_in_worker.html', context)
-def home(request):
-	return render(request, 'ourproject/dashboard.html')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_groub = Group.objects.get(name='Admin').user_set.all()
+            if user in users_in_groub:
+                login(request, user)
+                return redirect('homepage_admin')
+            else:
+                messages.info(request, 'Username OR Password incorrert')
+        else:
+            messages.info(request, 'username OR Password incorrert')
+    context = {}
+    return render(request, 'ourproject/log_in_admin.html', context)
 
+# @login_required(login_url='login')
+# @only_customer
+
+def loginWorker(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            users_in_groub = Group.objects.get(name='Worker').user_set.all()
+            if user in users_in_groub:
+                login(request, user)
+                return redirect('homepage_worker')
+            else:
+                messages.info(request, 'Username OR Password incorrert')
+        else:
+            messages.info(request, 'username OR Password incorrert')
+    context = {}
+    return render(request, 'ourproject/log_in_worker.html', context)
+
+
+def home(request):
+    return render(request, 'ourproject/dashboard.html')
 @login_required(login_url='loginAdmin')
 @only_customer
 def homepage(request):
     products = Product.objects.all()
     return render(request, 'ourproject/homepage.html', {'products': products})
 
-@login_required(login_url='login')
-@admin_only
+
+# @login_required(login_url='login')
+# @admin_only
 def homepage_admin(request):
-	return render(request, 'ourproject/homepage_admin.html')
+    return render(request, 'ourproject/homepage_admin.html')
+
+
 @login_required(login_url='login')
 @only_worker
 def homepage_worker(request):
-	return render(request, 'ourproject/homepage_worker.html')
+    return render(request, 'ourproject/homepage_worker.html')
+
 
 def products_worker(request):
     products = Product.objects.all()
@@ -129,6 +142,7 @@ def workers(request):
 	wor= {'workers_list': workers_list}
 	return render(request,'ourproject/workers.html',wor)
 def view_customer(request):
+
     users_in_group = Group.objects.get(name='Customer').user_set.all()
     # customer =Customer.objects.all()
     cus = {'users_in_group': users_in_group}
@@ -144,7 +158,7 @@ def view_order(request):
 	order =Order.objects.all()
 	# customer =Customer.objects.all()
 	ord = {'order': order}
-	return render(request, 'ourproject/order_list.html',ord)
+	return render(request, 'ourproject/order_list.html', ord)
 def work_schedule(request):
 	shift_assignments = WeekDayShift.objects.order_by('shift__shift_name','day__day_name','worker_name').values_list('shift__shift_id','day__day_id','worker_name')
 	lis=WeekDay.objects.all().order_by('day_id').values_list('day_name')
@@ -168,7 +182,6 @@ def work_schedule(request):
 			shift_assignment_list[2].append(shift[2])
 		if shift[0]==3:
 			shift_assignment_list[3].append(shift[2])
-
 	context={'shift_assignment_list':shift_assignment_list}
 	return render(request, 'ourproject/buildschedule_forAdmin.html', context)
 def review_my_order(request,pk):
@@ -448,6 +461,7 @@ def worker_view_feedback(request):
     feedback = Feedback.objects.all()
     fedb = {'feedback': feedback}
     return render(request, 'ourproject/worker_view_feedback.html', fedb)
+
 def review_my_order(request,pk):
 	user=User.objects.get(username=pk)
 	order = Order.objects.filter(customer=user)
@@ -476,31 +490,38 @@ def add_to_cart(request,bar_code,username):
 
 def my_cart(request):
     Cart = cart.objects.all()
-    Crt = {'cart': Cart}
+    Crt = {'Cart': Cart}
     return render(request, 'ourproject/my_cart.html', Crt)
-##@login_required(login_url='login')
-##@allwed_users(allowed_roles=['worker'])
-def editprofile(request):
-	User = request.user
-	form = WorkerForm(instance=User)
-	context = {'form': form }
-	return render(request,'ourproject/worker_edit_profile.html', context)
-def accountsetting(request):
-	Worker = request.user.worker
-	form = WorkerForm(instance=Worker)
-	context = {'form': form}
-	return render(request, 'ourproject/worker_edit_profile.html', context)
 
-def admindeleteworker(request, pk):
-	Worker =WorkerForm.objects.get(bar_code=pk)
-	if request.method == 'POST':
-		Worker.delete()
-		return redirect('admin_delete_worker')
-	context = {'item': Worker}
-	return render(request, 'ourproject/admin_delete_worker.html',context)
-def createorder(request):
-	form=OrderForm()
-	context= {'form':form}
-	return render(request,'ourproject/customer_open_order.html',context)
+def workschedule_worker(request):
+    shift_assignments = WeekDayShift.objects.order_by('shift__shift_name', 'day__day_name').values_list(
+        'shift__shift_id', 'day__day_id', 'worker_name')
+    lis = WeekDay.objects.all().order_by('day_id').values_list('day_name')
+    shift_assignment_list = []
+    ll = ['shifts/Days:']
+    for i in lis:
+        ll.append(i)
+    shift_assignment_list.append(ll)
+    # shift_assignment_list.append(lis)
+    shii1 = ['shift1']
+    shii2 = ['shift2']
+    shii3 = ['shift3']
+    shift_assignment_list.append(shii1)
+    shift_assignment_list.append(shii2)
+    shift_assignment_list.append(shii3)
+    for shift in shift_assignments:
+        index = [shift[2]]
+        if shift[0] == 1:
+            shift_assignment_list[1].append(shift[2])
+        if shift[0] == 2:
+            shift_assignment_list[2].append(shift[2])
+        if shift[0] == 3:
+            shift_assignment_list[3].append(shift[2])
 
+    context = {'shift_assignment_list': shift_assignment_list}
+    return render(request, 'ourproject/work _schedule_forworker.html', context)
 
+def customer_view_feedback(request):
+    feedback = Feedback.objects.all()
+    fedb = {'feedback': feedback}
+    return render(request, 'ourproject/review_feedback_customer.html', fedb)
