@@ -142,6 +142,7 @@ def workers(request):
 	wor= {'workers_list': workers_list}
 	return render(request,'ourproject/workers.html',wor)
 def view_customer(request):
+
     users_in_group = Group.objects.get(name='Customer').user_set.all()
     # customer =Customer.objects.all()
     cus = {'users_in_group': users_in_group}
@@ -488,5 +489,5 @@ def add_to_cart(request,bar_code,username):
 
 def my_cart(request):
     Cart = cart.objects.all()
-    Crt = {'feedback': Cart}
-    return render(request, 'ourproject/worker_view_feedback.html', Crt)
+    Crt = {'Cart': Cart}
+    return render(request, 'ourproject/my_cart.html', Crt)
