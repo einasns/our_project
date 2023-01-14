@@ -458,7 +458,7 @@ class LogoutWorkerTest(unittest.TestCase):
 class LogoutAdminTest(unittest.TestCase):
     def setUp(self):
         self.factory = RequestFactory()
-    def test_logout_admi (self):
+    def test_logout_admin(self):
         # Create a request and log in a user
         request = self.factory.get(reverse('login'))
         request.user = User.objects.create_user(username='testuser', password='testpassword',first_name='fff',last_name='ffff',email='ffff@gmail.com')

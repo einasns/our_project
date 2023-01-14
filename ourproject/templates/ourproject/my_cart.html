@@ -29,7 +29,7 @@
                           <tr>
                               <td>{{i.product}}</td>
                               <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'deletecart' i.product.bar_code %}"> - </a></td>
-                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> order it </a></td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'order_product' i.product.bar_code user.username%}"> order it </a></td>
 
                           </tr>
                       {% endfor %}
