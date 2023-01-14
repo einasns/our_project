@@ -25,10 +25,10 @@
                 <th> order product</th>
 
             </tr>
-            {% for i in cart %}
+            {% for i in Cart %}
                           <tr>
                               <td>{{i.product}}</td>
-                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> - </a></td>
+                              <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="{% url 'deletecart' i.product.bar_code %}"> - </a></td>
                               <td> <a class="btn btn-outline-info"style="width: 150px;height: 30px;background: #383838; color: white;border-block-color: black" href="#"> order it </a></td>
 
                           </tr>
