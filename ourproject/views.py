@@ -150,8 +150,12 @@ def view_customer(request):
 
 
 def deleteworker(request, pk):
-    context = {}
-    return render(request, 'ourproject/delete.html', context)
+    worker = Worker.objects.get(worker_id=pk)
+    if request.method == 'POST':
+        Worker.delete()
+    context = {'item': Worker}
+    return render(request, 'ourproject/admin_delete_worker.html.html', context)
+
 
 
 def view_order(request):

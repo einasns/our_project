@@ -5,9 +5,10 @@
 
   <p>are you sure you want to delete"{{ item }}" ?</p>
 
-  <form method="POST">
+  <form action="{% url 'delete_worker' item.id %}" method="POST">
 
 
+      {% csrf_token %}
       <a href="{% url 'home' %}">cancel</a>
       <input type="submit" name="confirm">
   </form>

@@ -42,7 +42,7 @@
                               <td>{{ i.worker_id }}</td>
 {#                              <td>{{ i.password }}</td>#}
                               <td>{{ i.bank_acccount }}</td>
-                              <td> <a class="btn btn-outline-danger "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="#"> delete </a></td>
+                              <td> <a class="btn btn-outline-danger "style="width: 150px;height: 30px;background: #383838; color:#ffffff;border-block-color: black" href="{% url 'delete_worker' item.worker_id %}"> delete worker </a></td>
 
                           </tr>
                       {% endfor %}
